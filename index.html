@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 
@@ -15,9 +15,9 @@
     <header id="siteHeader">
         <a href="#" class="logo" data-nav="home">Joshua Ngo</a>
         <nav class="header-nav">
-            <a href="#" data-nav="work" class="nav-link"><span class="nav-num">1</span><span class="nav-text" data-i18n="work">Work</span></a>
-            <a href="#" data-nav="about" class="nav-link"><span class="nav-num">2</span><span class="nav-text" data-i18n="about">About</span></a>
-            <a href="#" data-nav="contact" class="nav-link"><span class="nav-num">3</span><span class="nav-text" data-i18n="contact">Contact</span></a>
+            <a href="#" data-nav="home" class="nav-link active">Work</a>
+            <a href="#" data-nav="about" class="nav-link">About</a>
+            <a href="#" data-nav="contact" class="nav-link">Contact</a>
         </nav>
         <div class="header-right">
             <button class="menu-btn" id="menuBtn">
@@ -28,56 +28,65 @@
 
     <!-- Mobile Overlay -->
     <div class="mobile-overlay" id="mobileOverlay">
-        <a href="#" data-nav="work" data-i18n="work">Work</a>
-        <a href="#" data-nav="about" data-i18n="about">About</a>
-        <a href="#" data-nav="contact" data-i18n="contact">Contact</a>
+        <a href="#" data-nav="home">Work</a>
+        <a href="#" data-nav="about">About</a>
+        <a href="#" data-nav="contact">Contact</a>
     </div>
 
     <!-- Main Content -->
     <main>
 
-        <!-- Home -->
+        <!-- Home / Portfolio Feed -->
         <section class="page active" id="page-home">
-            <div class="home-gallery">
-                <a href="#" class="gallery-item" data-project="project-one">
-                    <img src="images/akira-back.jpg" alt="Akira Back">
-                </a>
-                <a href="#" class="gallery-item" data-project="project-two">
-                    <img src="images/hanok-essay-nuwa.jpg" alt="Hanok Essay Nuwa">
-                </a>
-                <a href="#" class="gallery-item" data-project="project-three">
-                    <img src="images/maha.jpg" alt="MAHA">
-                </a>
-                <a href="#" class="gallery-item" data-project="project-four">
-                    <img src="images/ongozisin.jpg" alt="ONGOZISIN">
-                </a>
-            </div>
-        </section>
 
-        <!-- Work -->
-        <section class="page" id="page-work">
-            <div class="page-title-row">
-                <h2 class="page-title" data-i18n="selectedWork">Selected Work</h2>
-                <span class="page-count" data-i18n="projectCount">4 Projects</span>
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="design">Design</button>
+                <button class="filter-btn" data-filter="branding">Branding</button>
+                <button class="filter-btn" data-filter="creative-direction">Creative Direction</button>
+                <button class="filter-btn" data-filter="photography">Photography</button>
             </div>
-            <div class="divider"></div>
-            <div class="work-grid">
-                <a href="#" class="work-item" data-project="project-one">
-                    <img src="images/akira-back.jpg" alt="Project One">
-                    <span class="work-caption">Project One</span>
-                </a>
-                <a href="#" class="work-item" data-project="project-two">
-                    <img src="images/hanok-essay-nuwa.jpg" alt="Project Two">
-                    <span class="work-caption">Project Two</span>
-                </a>
-                <a href="#" class="work-item" data-project="project-three">
-                    <img src="images/maha.jpg" alt="Project Three">
-                    <span class="work-caption">Project Three</span>
-                </a>
-                <a href="#" class="work-item" data-project="project-four">
-                    <img src="images/ongozisin.jpg" alt="Project Four">
-                    <span class="work-caption">Project Four</span>
-                </a>
+
+            <div class="portfolio-feed">
+                <article class="portfolio-entry" data-category="design">
+                    <a href="#" class="portfolio-image" data-project="project-one">
+                        <img src="images/akira-back.jpg" alt="Project One">
+                    </a>
+                    <div class="portfolio-caption">
+                        <a href="#" class="portfolio-title" data-project="project-one">Project One</a>
+                        <span class="portfolio-tags">Design, 2026</span>
+                    </div>
+                </article>
+
+                <article class="portfolio-entry" data-category="branding">
+                    <a href="#" class="portfolio-image" data-project="project-two">
+                        <img src="images/hanok-essay-nuwa.jpg" alt="Project Two">
+                    </a>
+                    <div class="portfolio-caption">
+                        <a href="#" class="portfolio-title" data-project="project-two">Project Two</a>
+                        <span class="portfolio-tags">Branding, 2025</span>
+                    </div>
+                </article>
+
+                <article class="portfolio-entry" data-category="creative-direction">
+                    <a href="#" class="portfolio-image" data-project="project-three">
+                        <img src="images/maha.jpg" alt="Project Three">
+                    </a>
+                    <div class="portfolio-caption">
+                        <a href="#" class="portfolio-title" data-project="project-three">Project Three</a>
+                        <span class="portfolio-tags">Creative Direction, 2025</span>
+                    </div>
+                </article>
+
+                <article class="portfolio-entry" data-category="photography">
+                    <a href="#" class="portfolio-image" data-project="project-four">
+                        <img src="images/ongozisin.jpg" alt="Project Four">
+                    </a>
+                    <div class="portfolio-caption">
+                        <a href="#" class="portfolio-title" data-project="project-four">Project Four</a>
+                        <span class="portfolio-tags">Photography, 2024</span>
+                    </div>
+                </article>
             </div>
         </section>
 
@@ -86,9 +95,18 @@
             <div class="about-layout">
                 <div class="about-col">
                     <p class="about-text">
-                        A creative practice that began in photography and grew into
-                        design and direction. Shaped by Softer Volumes, and by the
-                        small, considered details that hold a body of work together.
+                        Hi, I'm Joshua. My creative path started with photography,
+                        a quiet hobby that gradually became a way of paying attention.
+                    </p>
+                    <p class="about-text">
+                        Working alongside Softer Volumes turned that habit into a
+                        practice. It's where I built the toolkit I still use today,
+                        from research and design to the small, considered details
+                        that hold a body of work together.
+                    </p>
+                    <p class="about-text">
+                        When I'm not working, I'm usually planning the next trip or
+                        just wandering somewhere new with a camera.
                     </p>
 
                     <div class="about-projects">
@@ -108,7 +126,7 @@
         <section class="page" id="page-contact">
             <div class="contact-layout">
                 <div class="contact-col">
-                    <h2 class="contact-heading" data-i18n="getInTouch">Get in touch</h2>
+                    <h2 class="contact-heading">Get in touch</h2>
                 </div>
                 <div class="contact-col">
                     <div class="contact-links">
@@ -136,7 +154,7 @@
                 <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200&q=80" alt="Project One - 2">
                 <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=1200&q=80" alt="Project One - 3">
             </div>
-            <a href="#" class="back-link" data-nav="work">&larr; Back to Work</a>
+            <a href="#" class="back-link" data-nav="home">&larr; Back to Work</a>
         </section>
 
         <section class="page" id="page-project-two">
@@ -152,7 +170,7 @@
                 <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80" alt="Project Two - 1">
                 <img src="https://images.unsplash.com/photo-1481253127861-534498168948?w=1200&q=80" alt="Project Two - 2">
             </div>
-            <a href="#" class="back-link" data-nav="work">&larr; Back to Work</a>
+            <a href="#" class="back-link" data-nav="home">&larr; Back to Work</a>
         </section>
 
         <section class="page" id="page-project-three">
@@ -168,7 +186,7 @@
                 <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&q=80" alt="Project Three - 1">
                 <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80" alt="Project Three - 2">
             </div>
-            <a href="#" class="back-link" data-nav="work">&larr; Back to Work</a>
+            <a href="#" class="back-link" data-nav="home">&larr; Back to Work</a>
         </section>
 
         <section class="page" id="page-project-four">
@@ -185,7 +203,7 @@
                 <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1200&q=80" alt="Project Four - 2">
                 <img src="https://images.unsplash.com/photo-1448630360428-65456885c650?w=1200&q=80" alt="Project Four - 3">
             </div>
-            <a href="#" class="back-link" data-nav="work">&larr; Back to Work</a>
+            <a href="#" class="back-link" data-nav="home">&larr; Back to Work</a>
         </section>
 
     </main>
@@ -203,7 +221,6 @@
         const navLinks = document.querySelectorAll('[data-nav]');
         const menuBtn = document.getElementById('menuBtn');
         const mobileOverlay = document.getElementById('mobileOverlay');
-        const siteHeader = document.getElementById('siteHeader');
 
         function showPage(id) {
             pages.forEach(p => p.classList.remove('active'));
@@ -213,7 +230,6 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 observeImages();
             }
-            // Close mobile menu
             menuBtn.classList.remove('open');
             mobileOverlay.classList.remove('open');
         }
@@ -226,13 +242,12 @@
                 showPage(nav);
 
                 document.querySelectorAll('.header-nav .nav-link').forEach(l => l.classList.remove('active'));
-                if (nav === 'home') return;
                 const headerLink = document.querySelector('.header-nav [data-nav="' + nav + '"]');
                 if (headerLink) headerLink.classList.add('active');
             });
         });
 
-        // Project links (grid + table)
+        // Project links (portfolio feed)
         document.querySelectorAll('[data-project]').forEach(link => {
             link.addEventListener('click', e => {
                 e.preventDefault();
@@ -241,10 +256,21 @@
             });
         });
 
-        // Mobile menu
-        menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('open');
-            mobileOverlay.classList.toggle('open');
+        // Category filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const entries = document.querySelectorAll('.portfolio-entry');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+
+                entries.forEach(entry => {
+                    const match = filter === 'all' || entry.dataset.category === filter;
+                    entry.style.display = match ? '' : 'none';
+                });
+            });
         });
 
         // Scroll-reveal for images
@@ -268,7 +294,7 @@
         }
 
         function initReveals() {
-            document.querySelectorAll('.project-gallery img').forEach(el => {
+            document.querySelectorAll('.project-gallery img, .portfolio-image img').forEach(el => {
                 el.classList.add('reveal');
             });
             observeImages();
@@ -276,24 +302,11 @@
 
         initReveals();
 
-        // Slideshow
-        (function() {
-            const slides = document.querySelectorAll('.home-gallery .gallery-item');
-            if (!slides.length) return;
-            let current = 0;
-
-            function showSlide(index) {
-                slides.forEach(s => s.classList.remove('slide-active'));
-                slides[index].classList.add('slide-active');
-            }
-
-            showSlide(0);
-
-            setInterval(() => {
-                current = (current + 1) % slides.length;
-                showSlide(current);
-            }, 4000);
-        })();
+        // Mobile menu
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('open');
+            mobileOverlay.classList.toggle('open');
+        });
     </script>
 
 </body>
