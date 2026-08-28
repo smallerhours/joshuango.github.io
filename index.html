@@ -8,7 +8,7 @@
   <meta property="og:description" content="Thoughts and things that patina well.">
   <meta property="og:type" content="website">
   <title>Smaller Hours</title>
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
@@ -25,7 +25,6 @@
 
   <main id="content">
     <section class="welcome section-shell" id="welcome" aria-labelledby="welcome-title">
-      <p class="side-title side-title-left" data-parallax="0.035" aria-hidden="true">Welcome</p>
       <div class="welcome-grid">
         <div class="hero-visual reveal-visual" role="img" aria-label="Featured image placeholder">
           <div class="visual-fill" data-depth="0.045"></div>
@@ -36,14 +35,13 @@
           <h1 id="welcome-title">Things shaped<br>by time.</h1>
           <div class="welcome-foot">
             <p>Observations on material, place, and the quiet character acquired through use.</p>
-            <a href="#recent" class="arrow-link">Explore recent <span aria-hidden="true">↓</span></a>
           </div>
         </div>
       </div>
     </section>
 
     <section class="recent section-shell" id="recent" aria-labelledby="recent-title">
-      <p class="side-title side-title-right" data-parallax="-0.025" aria-hidden="true">Recent</p>
+      <p class="recent-label" aria-hidden="true">Recent</p>
       <header class="recent-intro reveal">
         <p class="kicker">Recent additions</p>
         <h2 id="recent-title">A visual index of things that patina well.</h2>
@@ -51,29 +49,17 @@
       </header>
 
       <div class="project-grid" aria-label="Recent image placeholders">
-        <article class="project project-wide reveal" style="--delay: 0ms">
+        <article class="project project-landscape reveal" style="--delay: 0ms">
           <div class="project-visual"><div class="visual-fill shade-1" data-depth="0.025"></div></div>
           <footer><h3>Study 01</h3><p>Material / Surface</p></footer>
         </article>
-        <article class="project project-tall reveal" style="--delay: 80ms">
+        <article class="project project-portrait reveal" style="--delay: 80ms">
           <div class="project-visual"><div class="visual-fill shade-2" data-depth="0.05"></div></div>
           <footer><h3>Study 02</h3><p>Object / Use</p></footer>
         </article>
-        <article class="project project-small reveal" style="--delay: 30ms">
+        <article class="project project-portrait reveal" style="--delay: 120ms">
           <div class="project-visual"><div class="visual-fill shade-3" data-depth="0.035"></div></div>
           <footer><h3>Study 03</h3><p>Place / Light</p></footer>
-        </article>
-        <article class="project project-small reveal" style="--delay: 110ms">
-          <div class="project-visual"><div class="visual-fill shade-1" data-depth="0.045"></div></div>
-          <footer><h3>Study 04</h3><p>Detail / Form</p></footer>
-        </article>
-        <article class="project project-tall reveal" style="--delay: 40ms">
-          <div class="project-visual"><div class="visual-fill shade-3" data-depth="0.03"></div></div>
-          <footer><h3>Study 05</h3><p>Interior / Patina</p></footer>
-        </article>
-        <article class="project project-wide reveal" style="--delay: 120ms">
-          <div class="project-visual"><div class="visual-fill shade-2" data-depth="0.05"></div></div>
-          <footer><h3>Study 06</h3><p>Archive / Found</p></footer>
         </article>
       </div>
     </section>
@@ -89,7 +75,6 @@
     const root = document.documentElement;
     const header = document.getElementById('siteHeader');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let lastScroll = window.scrollY;
     let ticking = false;
 
     const revealObserver = new IntersectionObserver((entries) => {
@@ -108,15 +93,8 @@
       const max = document.documentElement.scrollHeight - window.innerHeight;
       root.style.setProperty('--progress', max > 0 ? y / max : 0);
       header.classList.toggle('is-compact', y > 40);
-      header.classList.toggle('is-hidden', y > lastScroll && y > 160);
 
       if (!reducedMotion) {
-        document.querySelectorAll('[data-parallax]').forEach((item) => {
-          const speed = Number(item.dataset.parallax);
-          const rect = item.parentElement.getBoundingClientRect();
-          const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
-          item.style.setProperty('--parallax', offset + 'px');
-        });
         document.querySelectorAll('[data-depth]').forEach((item) => {
           const speed = Number(item.dataset.depth);
           const rect = item.parentElement.getBoundingClientRect();
@@ -125,7 +103,6 @@
         });
       }
 
-      lastScroll = y;
       ticking = false;
     }
 
