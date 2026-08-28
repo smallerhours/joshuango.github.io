@@ -8,7 +8,7 @@
   <meta property="og:description" content="Thoughts and things that patina well.">
   <meta property="og:type" content="website">
   <title>Smaller Hours</title>
-  <link rel="stylesheet" href="style.css?v=13">
+  <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
@@ -45,7 +45,6 @@
           <div class="visual-fill" data-depth="0.045"></div>
         </div>
         <div class="welcome-copy reveal">
-          <p class="kicker">Smaller Hours</p>
           <h1 id="welcome-title">Things shaped<br>by time.</h1>
           <div class="welcome-foot">
             <p>Observations on material, place, and the quiet character acquired through use.</p>
@@ -55,7 +54,6 @@
     </section>
 
     <section class="recent section-shell" id="recent" aria-labelledby="recent-title">
-      <p class="recent-label" data-parallax="-0.035" aria-hidden="true">Study</p>
       <header class="recent-intro reveal">
         <p class="kicker">Study index</p>
         <h2 id="recent-title">A visual index of things that patina well.</h2>
@@ -148,12 +146,6 @@
       floatingTop.classList.toggle('is-visible', y > window.innerHeight * 0.55);
 
       if (!reducedMotion) {
-        document.querySelectorAll('[data-parallax]').forEach((item) => {
-          const speed = Number(item.dataset.parallax);
-          const rect = item.parentElement.getBoundingClientRect();
-          const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
-          item.style.setProperty('--parallax', offset + 'px');
-        });
         document.querySelectorAll('[data-depth]').forEach((item) => {
           const speed = Number(item.dataset.depth);
           const rect = item.parentElement.getBoundingClientRect();
