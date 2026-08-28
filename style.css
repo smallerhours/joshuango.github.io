@@ -87,10 +87,10 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
 .visual-fill { position: absolute; inset: -8%; background: #353530; transform: translate3d(0, var(--depth, 0px), 0) scale(1.05); will-change: transform; }
 .hero-visual .visual-fill { clip-path: inset(0 0 100% 0); transition: clip-path 1.15s cubic-bezier(.77, 0, .18, 1); }
 .hero-visual.is-visible .visual-fill { clip-path: inset(0); }
-.welcome-copy { display: grid; grid-template-rows: auto 1fr auto; align-items: start; padding: clamp(12px, 2vw, 30px) 0 6px; }
+.welcome-copy { display: grid; grid-template-rows: 1fr auto; align-items: start; padding: 0; }
 .kicker { font-size: 9px; text-transform: uppercase; letter-spacing: .15em; }
 .welcome h1 {
-  align-self: center; max-width: 7em; margin-left: 0;
+  align-self: start; max-width: 7em; margin-left: 0;
   font-family: var(--serif); font-size: clamp(66px, 8.4vw, 142px);
   font-weight: 400; line-height: 1.12; letter-spacing: -.025em;
 }
@@ -99,12 +99,6 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
 .arrow-link { font-size: 9px; text-transform: uppercase; letter-spacing: .13em; }
 
 .recent { padding: clamp(110px, 15vw, 240px) clamp(70px, 9vw, 145px) clamp(100px, 13vw, 210px); border-top: 1px solid var(--rule); }
-.recent-label {
-  position: absolute; top: clamp(120px, 16vw, 250px); right: var(--gutter);
-  font-size: 9px; line-height: 1; text-transform: uppercase; letter-spacing: .16em;
-  writing-mode: vertical-rl; pointer-events: none;
-  transform: translateY(var(--parallax, 0px)); will-change: transform;
-}
 .recent-intro { display: grid; grid-template-columns: 1fr 2.2fr 1fr; gap: clamp(26px, 5vw, 88px); align-items: start; margin-bottom: clamp(110px, 16vw, 250px); }
 .recent-intro h2 { max-width: 8.5em; font-family: var(--serif); font-size: clamp(46px, 6vw, 96px); font-weight: 400; line-height: .9; letter-spacing: -.065em; }
 .recent-note { align-self: end; max-width: 30ch; font-family: var(--serif); font-size: clamp(16px, 1.3vw, 20px); line-height: 1.45; }
@@ -158,7 +152,6 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
   .recent-intro { grid-template-columns: 1fr; margin-bottom: 110px; }
   .recent-intro h2 { font-size: clamp(54px, 15vw, 88px); }
   .recent-note { justify-self: end; }
-  .recent-label { top: 86px; right: 20px; }
   .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 80px 14px; }
   .project-landscape { grid-column: 1 / -1; }
   .floating-top { right: 20px; bottom: 20px; }
