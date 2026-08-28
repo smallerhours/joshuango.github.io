@@ -78,6 +78,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
 .arrow-link:hover::after { transform: scaleX(1); transform-origin: left; }
 
 .section-shell { position: relative; }
+.recent-label, .side-title-right { display: none !important; }
 
 .welcome { min-height: 100svh; padding: calc(var(--header-h) + 24px) clamp(60px, 8vw, 130px) clamp(42px, 6vw, 96px); }
 .welcome-grid { min-height: calc(100svh - var(--header-h) - 66px); display: grid; grid-template-columns: minmax(0, 1.34fr) minmax(340px, .66fr); gap: clamp(24px, 5vw, 88px); }
