@@ -8,7 +8,7 @@
   <meta property="og:description" content="Thoughts and things that patina well.">
   <meta property="og:type" content="website">
   <title>Smaller Hours</title>
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=12">
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
@@ -16,7 +16,9 @@
 
   <header class="site-header" id="siteHeader">
     <a class="wordmark" href="#welcome" aria-label="Smaller Hours, home"><span>Smaller</span><span>Hours</span></a>
-    <p class="header-note">An evolving collection<br>of things that endure</p>
+    <p class="header-note" aria-label="Visitor local date and time">
+      <span id="localDate"></span><span id="localTime"></span>
+    </p>
     <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="sideMenu" aria-label="Open menu">
       <span></span><span></span>
     </button>
@@ -30,7 +32,7 @@
     </header>
     <nav class="menu-nav" aria-label="Menu navigation">
       <a href="#welcome"><span>01</span>Welcome</a>
-      <a href="#recent"><span>02</span>Recent</a>
+      <a href="#recent"><span>02</span>Study</a>
     </nav>
     <footer class="menu-footer">
       <p>Observations on material, place, and the quiet character acquired through use.</p>
@@ -43,7 +45,6 @@
       <div class="welcome-grid">
         <div class="hero-visual reveal-visual" role="img" aria-label="Featured image placeholder">
           <div class="visual-fill" data-depth="0.045"></div>
-          <p class="visual-index">No. 001</p>
         </div>
         <div class="welcome-copy reveal">
           <p class="kicker">Smaller Hours</p>
@@ -56,14 +57,14 @@
     </section>
 
     <section class="recent section-shell" id="recent" aria-labelledby="recent-title">
-      <p class="recent-label" aria-hidden="true">Recent</p>
+      <p class="recent-label" data-parallax="-0.035" aria-hidden="true">Study</p>
       <header class="recent-intro reveal">
-        <p class="kicker">Recent additions</p>
+        <p class="kicker">Study index</p>
         <h2 id="recent-title">A visual index of things that patina well.</h2>
         <p class="recent-note">Objects, spaces, materials, and fragments selected for the way they carry time.</p>
       </header>
 
-      <div class="project-grid" aria-label="Recent image placeholders">
+      <div class="project-grid" aria-label="Study image placeholders">
         <article class="project project-landscape reveal" style="--delay: 0ms">
           <div class="project-visual"><div class="visual-fill shade-1" data-depth="0.025"></div></div>
           <footer><h3>Study 01</h3><p>Material / Surface</p></footer>
@@ -81,10 +82,10 @@
   </main>
 
   <footer class="site-footer">
-    <p class="footer-brand">Smaller Hours</p>
-    <p>Thoughts and things<br>that patina well</p>
-    <a href="#welcome" class="arrow-link">Back to top <span aria-hidden="true">↑</span></a>
+    <p class="footer-brand">Smaller Hours<sup>©</sup></p>
   </footer>
+
+  <a class="floating-top" id="floatingTop" href="#welcome" aria-label="Back to top"><span aria-hidden="true">↑</span></a>
 
   <script>
     const root = document.documentElement;
@@ -93,6 +94,9 @@
     const menuClose = document.getElementById('menuClose');
     const menuBackdrop = document.getElementById('menuBackdrop');
     const sideMenu = document.getElementById('sideMenu');
+    const floatingTop = document.getElementById('floatingTop');
+    const localDate = document.getElementById('localDate');
+    const localTime = document.getElementById('localTime');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let ticking = false;
 
@@ -114,6 +118,19 @@
       if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') setMenu(false);
     });
 
+    function updateLocalDateTime() {
+      const now = new Date();
+      localDate.textContent = new Intl.DateTimeFormat(undefined, {
+        weekday: 'short', day: '2-digit', month: 'short', year: 'numeric'
+      }).format(now);
+      localTime.textContent = new Intl.DateTimeFormat(undefined, {
+        hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short'
+      }).format(now);
+    }
+
+    updateLocalDateTime();
+    window.setInterval(updateLocalDateTime, 1000);
+
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -130,8 +147,15 @@
       const max = document.documentElement.scrollHeight - window.innerHeight;
       root.style.setProperty('--progress', max > 0 ? y / max : 0);
       header.classList.toggle('is-compact', y > 40);
+      floatingTop.classList.toggle('is-visible', y > window.innerHeight * 0.55);
 
       if (!reducedMotion) {
+        document.querySelectorAll('[data-parallax]').forEach((item) => {
+          const speed = Number(item.dataset.parallax);
+          const rect = item.parentElement.getBoundingClientRect();
+          const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
+          item.style.setProperty('--parallax', offset + 'px');
+        });
         document.querySelectorAll('[data-depth]').forEach((item) => {
           const speed = Number(item.dataset.depth);
           const rect = item.parentElement.getBoundingClientRect();
