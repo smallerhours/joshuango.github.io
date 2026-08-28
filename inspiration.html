@@ -8,13 +8,13 @@
   <meta property="og:description" content="A growing reference collection.">
   <meta property="og:type" content="website">
   <title>Inspiration — Smaller Hours</title>
-  <link rel="stylesheet" href="style.css?v=15">
+  <link rel="stylesheet" href="style.css?v=17">
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
   <header class="site-header" id="siteHeader">
     <a class="wordmark" href="index.html" aria-label="Smaller Hours, home"><span>Smaller</span><span>Hours</span></a>
-    <p class="header-note" aria-label="Visitor local date and time"><span id="localDate"></span><span id="localTime"></span></p>
+    <p class="header-note" aria-label="Visitor local time"><span id="localTime"></span></p>
     <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="sideMenu" aria-label="Open menu"><span></span><span></span></button>
   </header>
 
@@ -40,7 +40,6 @@
     const menuClose = document.getElementById('menuClose');
     const menuBackdrop = document.getElementById('menuBackdrop');
     const sideMenu = document.getElementById('sideMenu');
-    const localDate = document.getElementById('localDate');
     const localTime = document.getElementById('localTime');
 
     function setMenu(open) {
@@ -55,8 +54,7 @@
 
     function updateLocalDateTime() {
       const now = new Date();
-      localDate.textContent = new Intl.DateTimeFormat(undefined, { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' }).format(now);
-      localTime.textContent = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' }).format(now);
+      localTime.textContent = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
     }
 
     menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
