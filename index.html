@@ -3,51 +3,140 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Smaller Hours shares thoughts and things that grow richer with time and use.">
+  <meta name="description" content="Smaller Hours — observations and objects that grow richer with time and use.">
   <meta property="og:title" content="Smaller Hours">
   <meta property="og:description" content="Thoughts and things that patina well.">
   <meta property="og:type" content="website">
   <title>Smaller Hours</title>
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
 
-  <header class="site-header">
-    <a class="wordmark" href="#top" aria-label="Smaller Hours, home"><span>Smaller</span><span>Hours</span></a>
+  <header class="site-header" id="siteHeader">
+    <a class="wordmark" href="#welcome" aria-label="Smaller Hours, home"><span>Smaller</span><span>Hours</span></a>
+    <p class="header-note">An evolving collection<br>of things that endure</p>
     <nav class="primary-nav" aria-label="Primary navigation">
-      <a href="#gallery">Gallery</a>
+      <a href="#welcome">Welcome</a>
+      <a href="#recent">Recent</a>
     </nav>
   </header>
 
   <main id="content">
-    <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="hero-image" role="img" aria-label="Image placeholder"></div>
-      <div class="hero-copy">
-        <p class="eyebrow">Smaller Hours</p>
-        <h1 id="hero-title">A study of things shaped by time.</h1>
-        <p class="hero-note">Materials, spaces, and objects observed slowly.</p>
+    <section class="welcome section-shell" id="welcome" aria-labelledby="welcome-title">
+      <p class="side-title side-title-left" data-parallax="0.035" aria-hidden="true">Welcome</p>
+      <div class="welcome-grid">
+        <div class="hero-visual reveal-visual" role="img" aria-label="Featured image placeholder">
+          <div class="visual-fill" data-depth="0.045"></div>
+          <p class="visual-index">No. 001</p>
+        </div>
+        <div class="welcome-copy reveal">
+          <p class="kicker">Smaller Hours</p>
+          <h1 id="welcome-title">Things shaped<br>by time.</h1>
+          <div class="welcome-foot">
+            <p>Observations on material, place, and the quiet character acquired through use.</p>
+            <a href="#recent" class="arrow-link">Explore recent <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="gallery-section" id="gallery" aria-label="Gallery">
-      <div class="gallery-grid" aria-label="Gallery image placeholders">
-        <div class="gallery-item" role="img" aria-label="Gallery image placeholder 1"></div>
-        <div class="gallery-item" role="img" aria-label="Gallery image placeholder 2"></div>
-        <div class="gallery-item" role="img" aria-label="Gallery image placeholder 3"></div>
-        <div class="gallery-item" role="img" aria-label="Gallery image placeholder 4"></div>
-        <div class="gallery-item" role="img" aria-label="Gallery image placeholder 5"></div>
-        <div class="gallery-item" role="img" aria-label="Gallery image placeholder 6"></div>
-        <div class="gallery-item" role="img" aria-label="Gallery image placeholder 7"></div>
-        <div class="gallery-item" role="img" aria-label="Gallery image placeholder 8"></div>
-        <div class="gallery-item" role="img" aria-label="Gallery image placeholder 9"></div>
+    <section class="recent section-shell" id="recent" aria-labelledby="recent-title">
+      <p class="side-title side-title-right" data-parallax="-0.025" aria-hidden="true">Recent</p>
+      <header class="recent-intro reveal">
+        <p class="kicker">Recent additions</p>
+        <h2 id="recent-title">A visual index of things that patina well.</h2>
+        <p class="recent-note">Objects, spaces, materials, and fragments selected for the way they carry time.</p>
+      </header>
+
+      <div class="project-grid" aria-label="Recent image placeholders">
+        <article class="project project-wide reveal" style="--delay: 0ms">
+          <div class="project-visual"><div class="visual-fill shade-1" data-depth="0.025"></div></div>
+          <footer><h3>Study 01</h3><p>Material / Surface</p></footer>
+        </article>
+        <article class="project project-tall reveal" style="--delay: 80ms">
+          <div class="project-visual"><div class="visual-fill shade-2" data-depth="0.05"></div></div>
+          <footer><h3>Study 02</h3><p>Object / Use</p></footer>
+        </article>
+        <article class="project project-small reveal" style="--delay: 30ms">
+          <div class="project-visual"><div class="visual-fill shade-3" data-depth="0.035"></div></div>
+          <footer><h3>Study 03</h3><p>Place / Light</p></footer>
+        </article>
+        <article class="project project-small reveal" style="--delay: 110ms">
+          <div class="project-visual"><div class="visual-fill shade-1" data-depth="0.045"></div></div>
+          <footer><h3>Study 04</h3><p>Detail / Form</p></footer>
+        </article>
+        <article class="project project-tall reveal" style="--delay: 40ms">
+          <div class="project-visual"><div class="visual-fill shade-3" data-depth="0.03"></div></div>
+          <footer><h3>Study 05</h3><p>Interior / Patina</p></footer>
+        </article>
+        <article class="project project-wide reveal" style="--delay: 120ms">
+          <div class="project-visual"><div class="visual-fill shade-2" data-depth="0.05"></div></div>
+          <footer><h3>Study 06</h3><p>Archive / Found</p></footer>
+        </article>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>Smaller Hours</p>
-    <p>Ongoing archive</p>
+    <p class="footer-brand">Smaller Hours</p>
+    <p>Thoughts and things<br>that patina well</p>
+    <a href="#welcome" class="arrow-link">Back to top <span aria-hidden="true">↑</span></a>
   </footer>
+
+  <script>
+    const root = document.documentElement;
+    const header = document.getElementById('siteHeader');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let lastScroll = window.scrollY;
+    let ticking = false;
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-visual').forEach((item) => revealObserver.observe(item));
+
+    function updateScroll() {
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      root.style.setProperty('--progress', max > 0 ? y / max : 0);
+      header.classList.toggle('is-compact', y > 40);
+      header.classList.toggle('is-hidden', y > lastScroll && y > 160);
+
+      if (!reducedMotion) {
+        document.querySelectorAll('[data-parallax]').forEach((item) => {
+          const speed = Number(item.dataset.parallax);
+          const rect = item.parentElement.getBoundingClientRect();
+          const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
+          item.style.setProperty('--parallax', offset + 'px');
+        });
+        document.querySelectorAll('[data-depth]').forEach((item) => {
+          const speed = Number(item.dataset.depth);
+          const rect = item.parentElement.getBoundingClientRect();
+          const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
+          item.style.setProperty('--depth', offset + 'px');
+        });
+      }
+
+      lastScroll = y;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    updateScroll();
+  </script>
 </body>
 </html>
