@@ -8,7 +8,7 @@
   <meta property="og:description" content="Thoughts and things that patina well.">
   <meta property="og:type" content="website">
   <title>Smaller Hours</title>
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
@@ -17,11 +17,26 @@
   <header class="site-header" id="siteHeader">
     <a class="wordmark" href="#welcome" aria-label="Smaller Hours, home"><span>Smaller</span><span>Hours</span></a>
     <p class="header-note">An evolving collection<br>of things that endure</p>
-    <nav class="primary-nav" aria-label="Primary navigation">
-      <a href="#welcome">Welcome</a>
-      <a href="#recent">Recent</a>
-    </nav>
+    <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="sideMenu" aria-label="Open menu">
+      <span></span><span></span>
+    </button>
   </header>
+
+  <div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+  <aside class="side-menu" id="sideMenu" aria-hidden="true" aria-label="Site menu">
+    <header class="menu-header">
+      <p>Menu</p>
+      <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">Close</button>
+    </header>
+    <nav class="menu-nav" aria-label="Menu navigation">
+      <a href="#welcome"><span>01</span>Welcome</a>
+      <a href="#recent"><span>02</span>Recent</a>
+    </nav>
+    <footer class="menu-footer">
+      <p>Observations on material, place, and the quiet character acquired through use.</p>
+      <p>Smaller Hours</p>
+    </footer>
+  </aside>
 
   <main id="content">
     <section class="welcome section-shell" id="welcome" aria-labelledby="welcome-title">
@@ -74,8 +89,30 @@
   <script>
     const root = document.documentElement;
     const header = document.getElementById('siteHeader');
+    const menuButton = document.getElementById('menuButton');
+    const menuClose = document.getElementById('menuClose');
+    const menuBackdrop = document.getElementById('menuBackdrop');
+    const sideMenu = document.getElementById('sideMenu');
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let ticking = false;
+
+    function setMenu(open) {
+      document.body.classList.toggle('menu-open', open);
+      menuButton.setAttribute('aria-expanded', String(open));
+      menuButton.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      sideMenu.setAttribute('aria-hidden', String(!open));
+      menuBackdrop.setAttribute('aria-hidden', String(!open));
+      if (open) menuClose.focus();
+      else if (document.activeElement === menuClose) menuButton.focus();
+    }
+
+    menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
+    menuClose.addEventListener('click', () => setMenu(false));
+    menuBackdrop.addEventListener('click', () => setMenu(false));
+    sideMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') setMenu(false);
+    });
 
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
