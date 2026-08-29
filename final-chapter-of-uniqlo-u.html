@@ -9,7 +9,7 @@
   <meta property="og:type" content="article">
   <meta property="og:image" content="images/uniqlo-u-fw26-portrait.webp">
   <title>The Final Chapter of Uniqlo U — Smaller Hours</title>
-  <link rel="stylesheet" href="style.css?v=24">
+  <link rel="stylesheet" href="style.css?v=26">
 </head>
 <body class="article-page">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -34,25 +34,54 @@
 
   <main class="article-main" id="content">
     <article>
-      <header class="article-hero">
-        <p class="article-eyebrow"><span>Fashion / Study 01</span><time datetime="2026-08-29">29.08.26</time></p>
+      <header class="article-masthead">
+        <div class="article-topline">
+          <span>01</span>
+          <span>Study / Fashion</span>
+          <time datetime="2026-08-29">29.08.26</time>
+        </div>
         <h1>The Final Chapter of Uniqlo U</h1>
-        <p class="article-dek">A closing collection shaped by proportion, restraint, and the quiet confidence of clothes made for daily life.</p>
+        <div class="article-introduction">
+          <p>A closing collection shaped by proportion, restraint, and the quiet confidence of clothes made for daily life.</p>
+          <span aria-hidden="true">Scroll ↓</span>
+        </div>
       </header>
 
-      <figure class="article-lead">
+      <figure class="article-lead article-reveal">
         <img src="images/uniqlo-u-fw26-portrait.webp" alt="Model wearing a dark tailored jacket and carrying a black shoulder bag">
         <figcaption class="article-caption"><span>Uniqlo U / FW26</span><span>Study 01</span></figcaption>
       </figure>
 
-      <div class="article-body">
+      <section class="article-overview reveal" aria-label="Article overview">
+        <dl class="article-facts">
+          <div><dt>Collection</dt><dd>Uniqlo U / FW26</dd></div>
+          <div><dt>Category</dt><dd>Fashion</dd></div>
+          <div><dt>Published</dt><dd>29 August 2026</dd></div>
+        </dl>
+        <p class="article-standfirst">The final chapter is less a conclusion than a distillation: everyday clothing reduced to proportion, texture, and purpose.</p>
+      </section>
+
+      <section class="article-story reveal" aria-label="Article text">
         <p>Uniqlo U has always been most compelling when it makes the ordinary feel considered. Its final chapter continues that idea through softened tailoring, practical layers, and a restrained palette that leaves room for the wearer.</p>
         <p>The appeal is less about novelty than proportion: a jacket with enough volume to move, a tonal layer beneath it, and a bag treated as part of the silhouette rather than an accessory added afterward.</p>
-        <p>These are clothes designed to settle into a routine. Their character comes from repetition—creased sleeves, softened fabric, familiar combinations—and from the confidence to remain quiet.</p>
-        <p>For Smaller Hours, that is the lasting lesson: good design does not need to announce itself. It becomes clearer through use.</p>
+      </section>
+
+      <div class="article-detail-grid" aria-label="Garment details">
+        <figure class="article-detail article-detail-tall article-reveal"><img src="images/uniqlo-u-fw26-portrait.webp" alt="Full-length view of the dark tailored look"></figure>
+        <figure class="article-detail article-detail-close article-reveal"><img src="images/uniqlo-u-fw26-portrait.webp" alt="Detail of the jacket, tonal layers, and shoulder bag"></figure>
       </div>
 
-      <footer class="article-end"><a class="arrow-link" href="study.html">Back to Study ←</a></footer>
+      <blockquote class="article-quote reveal">Good design does not need to announce itself. It becomes clearer through use.</blockquote>
+
+      <section class="article-story article-story-offset reveal">
+        <p>These are clothes designed to settle into a routine. Their character comes from repetition—creased sleeves, softened fabric, familiar combinations—and from the confidence to remain quiet.</p>
+        <p>For Smaller Hours, that is the lasting lesson: what endures is rarely the loudest gesture. It is the object or garment that continues to feel right after novelty has passed.</p>
+      </section>
+
+      <nav class="article-project-nav" aria-label="Article navigation">
+        <a href="study.html"><span>Index</span><strong>All Studies</strong></a>
+        <a href="#content"><span>01 / Fashion</span><strong>Back to top ↑</strong></a>
+      </nav>
     </article>
   </main>
 
@@ -98,6 +127,15 @@
     menuBackdrop.addEventListener('click', () => setMenu(false));
     sideMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setMenu(false); });
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal, .article-reveal').forEach((item) => revealObserver.observe(item));
     window.addEventListener('scroll', () => {
       if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; }
     }, { passive: true });
