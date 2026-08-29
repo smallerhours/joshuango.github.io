@@ -99,8 +99,9 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
 .arrow-link { font-size: 9px; text-transform: uppercase; letter-spacing: .13em; }
 
 .recent { padding: clamp(110px, 15vw, 240px) clamp(70px, 9vw, 145px) clamp(100px, 13vw, 210px); border-top: 1px solid var(--rule); }
+.study-page-main { min-height: 100svh; padding-top: calc(var(--header-h) + clamp(90px, 10vw, 160px)); border-top: 0; }
 .recent-intro { display: grid; grid-template-columns: 1fr 2.2fr 1fr; gap: clamp(26px, 5vw, 88px); align-items: start; margin-bottom: clamp(110px, 16vw, 250px); }
-.recent-intro h2 { max-width: 8.5em; font-family: var(--serif); font-size: clamp(46px, 6vw, 96px); font-weight: 400; line-height: .9; letter-spacing: -.065em; }
+.recent-intro h1, .recent-intro h2 { max-width: 8.5em; font-family: var(--serif); font-size: clamp(46px, 6vw, 96px); font-weight: 400; line-height: .9; letter-spacing: -.065em; }
 .recent-note { align-self: end; max-width: 30ch; font-family: var(--serif); font-size: clamp(16px, 1.3vw, 20px); line-height: 1.45; }
 
 .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(70px, 8vw, 120px) clamp(18px, 2.5vw, 40px); }
@@ -114,7 +115,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
 .shade-2 { background: #474740; }
 .shade-3 { background: #5a5952; }
 .project footer { display: flex; justify-content: space-between; gap: 18px; padding-top: 10px; font-size: 9px; text-transform: uppercase; letter-spacing: .12em; }
-.project h3 { font: inherit; font-weight: 400; }
+.project h2, .project h3 { margin: 0; font: inherit; font-weight: 400; }
 .project footer p { color: var(--muted); }
 
 .site-footer { min-height: 58svh; display: grid; align-content: end; padding: 42px var(--gutter); border-top: 1px solid var(--rule); background: var(--warm); }
@@ -165,7 +166,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
   .welcome h1 { font-size: clamp(62px, 19vw, 108px); line-height: 1.06; letter-spacing: -.02em; }
   .recent { padding: 120px 20px 110px; }
   .recent-intro { grid-template-columns: 1fr; margin-bottom: 110px; }
-  .recent-intro h2 { font-size: clamp(54px, 15vw, 88px); }
+  .recent-intro h1, .recent-intro h2 { font-size: clamp(54px, 15vw, 88px); }
   .recent-note { justify-self: end; }
   .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 80px 14px; }
   .project-landscape { grid-column: 1 / -1; }
