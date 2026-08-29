@@ -84,8 +84,9 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
 .welcome-grid { min-height: calc(100svh - var(--header-h) - 66px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
 .hero-visual { position: relative; min-height: 72svh; overflow: hidden; background: transparent; }
 .visual-fill { position: absolute; inset: -8%; background: #353530; transform: translate3d(0, var(--depth, 0px), 0) scale(1.05); will-change: transform; }
-.hero-visual .visual-fill { clip-path: inset(0 0 100% 0); transition: clip-path 1.15s cubic-bezier(.77, 0, .18, 1); }
-.hero-visual.is-visible .visual-fill { clip-path: inset(0); }
+.hero-image { position: absolute; inset: -8%; width: 116%; height: 116%; object-fit: cover; object-position: center; transform: translate3d(0, var(--depth, 0px), 0) scale(1.05); will-change: transform; }
+.hero-visual .hero-image { clip-path: inset(0 0 100% 0); transition: clip-path 1.15s cubic-bezier(.77, 0, .18, 1); }
+.hero-visual.is-visible .hero-image { clip-path: inset(0); }
 .welcome-copy { display: grid; grid-template-rows: 1fr auto; align-items: start; padding: 0 0 0 clamp(40px, 5vw, 88px); }
 .kicker { font-size: 9px; text-transform: uppercase; letter-spacing: .15em; }
 .welcome h1 {
@@ -187,6 +188,6 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
   .reveal { opacity: 1; transform: none; }
-  .hero-visual, .project-visual { clip-path: inset(0); }
+  .hero-image, .project-visual { clip-path: inset(0); }
   .menu-backdrop, .side-menu { transition-duration: .01ms !important; }
 }
