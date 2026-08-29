@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Study — a visual index of things that patina well from Smaller Hours.">
+  <meta property="og:title" content="Study — Smaller Hours">
+  <meta property="og:description" content="A visual index of things that patina well.">
+  <meta property="og:type" content="website">
+  <title>Study — Smaller Hours</title>
+  <link rel="stylesheet" href="style.css?v=22">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <a class="wordmark" href="index.html" aria-label="Smaller Hours, home"><span>Smaller</span><span>Hours</span></a>
+    <p class="header-note" aria-label="Visitor local time"><span id="localTime"></span></p>
+    <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="sideMenu" aria-label="Open menu"><span></span><span></span></button>
+  </header>
+
+  <div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+  <aside class="side-menu" id="sideMenu" aria-hidden="true" aria-label="Site menu">
+    <header class="menu-header"><button class="menu-close" id="menuClose" type="button" aria-label="Close menu">Close</button></header>
+    <nav class="menu-nav" aria-label="Menu navigation">
+      <a href="about.html"><span>01</span>About</a>
+      <a href="study.html" aria-current="page"><span>02</span>Study</a>
+      <a href="inspiration.html"><span>03</span>Inspiration</a>
+    </nav>
+    <footer class="menu-footer"><img class="instagram-mark" src="images/instagram.svg" alt="Instagram"></footer>
+  </aside>
+
+  <main id="content">
+    <section class="recent study-page-main section-shell" id="study" aria-labelledby="study-title">
+      <header class="recent-intro reveal">
+        <p class="kicker">Study index</p>
+        <h1 id="study-title">A visual index of things that patina well.</h1>
+        <p class="recent-note">Objects, spaces, materials, and fragments selected for the way they carry time.</p>
+      </header>
+
+      <div class="project-grid" aria-label="Study image placeholders">
+        <article class="project project-landscape reveal" style="--delay: 0ms">
+          <div class="project-visual"><div class="visual-fill shade-1" data-depth="0.025"></div></div>
+          <footer><h2>Study 01</h2><p>Material / Surface</p></footer>
+        </article>
+        <article class="project project-portrait reveal" style="--delay: 80ms">
+          <div class="project-visual"><div class="visual-fill shade-2" data-depth="0.05"></div></div>
+          <footer><h2>Study 02</h2><p>Object / Use</p></footer>
+        </article>
+        <article class="project project-portrait reveal" style="--delay: 120ms">
+          <div class="project-visual"><div class="visual-fill shade-3" data-depth="0.035"></div></div>
+          <footer><h2>Study 03</h2><p>Place / Light</p></footer>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p class="footer-brand">Smaller Hours<sup>©</sup></p></footer>
+  <a class="floating-top" id="floatingTop" href="#study" aria-label="Back to top"><span aria-hidden="true">↑</span></a>
+
+  <script>
+    const root = document.documentElement;
+    const header = document.getElementById('siteHeader');
+    const menuButton = document.getElementById('menuButton');
+    const menuClose = document.getElementById('menuClose');
+    const menuBackdrop = document.getElementById('menuBackdrop');
+    const sideMenu = document.getElementById('sideMenu');
+    const floatingTop = document.getElementById('floatingTop');
+    const localTime = document.getElementById('localTime');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let ticking = false;
+
+    function setMenu(open) {
+      document.body.classList.toggle('menu-open', open);
+      menuButton.setAttribute('aria-expanded', String(open));
+      menuButton.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      sideMenu.setAttribute('aria-hidden', String(!open));
+      menuBackdrop.setAttribute('aria-hidden', String(!open));
+      if (open) menuClose.focus();
+      else if (document.activeElement === menuClose) menuButton.focus();
+    }
+
+    function updateLocalDateTime() {
+      localTime.textContent = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(new Date());
+    }
+
+    menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
+    menuClose.addEventListener('click', () => setMenu(false));
+    menuBackdrop.addEventListener('click', () => setMenu(false));
+    sideMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setMenu(false); });
+    updateLocalDateTime();
+    window.setInterval(updateLocalDateTime, 1000);
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach((item) => revealObserver.observe(item));
+
+    function updateScroll() {
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      root.style.setProperty('--progress', max > 0 ? y / max : 0);
+      header.classList.toggle('is-compact', y > 40);
+      floatingTop.classList.toggle('is-visible', y > window.innerHeight * 0.55);
+      if (!reducedMotion) {
+        document.querySelectorAll('[data-depth]').forEach((item) => {
+          const rect = item.parentElement.getBoundingClientRect();
+          const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * Number(item.dataset.depth);
+          item.style.setProperty('--depth', offset + 'px');
+        });
+      }
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; }
+    }, { passive: true });
+    updateScroll();
+  </script>
+</body>
+</html>
