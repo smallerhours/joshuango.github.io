@@ -135,8 +135,8 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
 .about-copy { max-width: 29ch; font-family: var(--serif); font-size: clamp(18px, 1.6vw, 24px); line-height: 1.45; }
 
 .about-page .about-main {
-  position: relative; min-height: 100svh; display: grid; place-items: center;
-  padding: calc(var(--header-h) + 70px) var(--gutter) 60px;
+  position: relative; min-height: 100svh; display: grid; grid-template-columns: 1fr;
+  place-items: center; gap: 0; padding: 0 var(--gutter);
 }
 .about-page .about-title {
   position: absolute; top: calc(var(--header-h) + 42px); left: 50%;
@@ -173,7 +173,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
   .about-title { align-self: start; font-size: clamp(96px, 31vw, 180px); }
   .about-title.inspiration-title { font-size: clamp(70px, 19vw, 116px); }
   .about-copy { justify-self: end; }
-  .about-page .about-main { padding: calc(var(--header-h) + 70px) 20px 40px; }
+  .about-page .about-main { padding: 0 20px; }
   .about-page .about-title { top: calc(var(--header-h) + 30px); font-size: 9px; }
   .about-page .about-copy { justify-self: center; }
 }
