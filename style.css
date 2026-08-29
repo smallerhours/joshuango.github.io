@@ -81,16 +81,16 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
 .recent-label, .side-title-right { display: none !important; }
 
 .welcome { min-height: 100svh; padding: calc(var(--header-h) + 24px) clamp(60px, 8vw, 130px) clamp(42px, 6vw, 96px); }
-.welcome-grid { min-height: calc(100svh - var(--header-h) - 66px); display: grid; grid-template-columns: minmax(0, 1.34fr) minmax(340px, .66fr); gap: clamp(24px, 5vw, 88px); }
+.welcome-grid { min-height: calc(100svh - var(--header-h) - 66px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
 .hero-visual { position: relative; min-height: 72svh; overflow: hidden; background: transparent; }
 .visual-fill { position: absolute; inset: -8%; background: #353530; transform: translate3d(0, var(--depth, 0px), 0) scale(1.05); will-change: transform; }
 .hero-visual .visual-fill { clip-path: inset(0 0 100% 0); transition: clip-path 1.15s cubic-bezier(.77, 0, .18, 1); }
 .hero-visual.is-visible .visual-fill { clip-path: inset(0); }
-.welcome-copy { display: grid; grid-template-rows: 1fr auto; align-items: start; padding: 0; }
+.welcome-copy { display: grid; grid-template-rows: 1fr auto; align-items: start; padding: 0 0 0 clamp(40px, 5vw, 88px); }
 .kicker { font-size: 9px; text-transform: uppercase; letter-spacing: .15em; }
 .welcome h1 {
   align-self: start; max-width: 7em; margin-left: 0;
-  font-family: var(--serif); font-size: clamp(50px, 8.4vw, 142px);
+  font-family: var(--serif); font-size: clamp(62px, 7.4vw, 126px);
   font-weight: 400; line-height: 1.12; letter-spacing: -.025em;
 }
 .welcome-foot { display: block; }
@@ -160,7 +160,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
   .welcome { padding: calc(var(--header-h) + 58px) 20px 64px; }
   .welcome-grid { grid-template-columns: 1fr; min-height: auto; }
   .hero-visual { min-height: 64svh; }
-  .welcome-copy { min-height: 62svh; padding-top: 30px; }
+  .welcome-copy { min-height: 62svh; padding: 30px 0 0; }
   .welcome h1 { font-size: clamp(62px, 19vw, 108px); line-height: 1.06; letter-spacing: -.02em; }
   .recent { padding: 120px 20px 110px; }
   .recent-intro { grid-template-columns: 1fr; margin-bottom: 110px; }
