@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Study — a visual index of things that patina well from Smaller Hours.">
+  <meta name="description" content="Study — articles and observations from Smaller Hours.">
   <meta property="og:title" content="Study — Smaller Hours">
-  <meta property="og:description" content="A visual index of things that patina well.">
+  <meta property="og:description" content="Articles and observations on design, material, and use.">
   <meta property="og:type" content="website">
   <title>Study — Smaller Hours</title>
-  <link rel="stylesheet" href="style.css?v=22">
+  <link rel="stylesheet" href="style.css?v=23">
 </head>
 <body>
   <a class="skip-link" href="#content">Skip to content</a>
@@ -31,33 +31,51 @@
     <footer class="menu-footer"><img class="instagram-mark" src="images/instagram.svg" alt="Instagram"></footer>
   </aside>
 
-  <main id="content">
-    <section class="recent study-page-main section-shell" id="study" aria-labelledby="study-title">
-      <header class="recent-intro reveal">
-        <p class="kicker">Study index</p>
-        <h1 id="study-title">A visual index of things that patina well.</h1>
-        <p class="recent-note">Objects, spaces, materials, and fragments selected for the way they carry time.</p>
-      </header>
+  <main class="study-archive" id="content">
+    <header class="archive-header">
+      <h1>Study</h1>
+      <p>Articles &amp; observations</p>
+    </header>
 
-      <div class="project-grid" aria-label="Study image placeholders">
-        <article class="project project-landscape reveal" style="--delay: 0ms">
-          <div class="project-visual"><div class="visual-fill shade-1" data-depth="0.025"></div></div>
-          <footer><h2>Study 01</h2><p>Material / Surface</p></footer>
-        </article>
-        <article class="project project-portrait reveal" style="--delay: 80ms">
-          <div class="project-visual"><div class="visual-fill shade-2" data-depth="0.05"></div></div>
-          <footer><h2>Study 02</h2><p>Object / Use</p></footer>
-        </article>
-        <article class="project project-portrait reveal" style="--delay: 120ms">
-          <div class="project-visual"><div class="visual-fill shade-3" data-depth="0.035"></div></div>
-          <footer><h2>Study 03</h2><p>Place / Light</p></footer>
-        </article>
-      </div>
+    <section class="article-grid" aria-label="Study articles">
+      <article class="article-card reveal">
+        <div class="article-media">
+          <img src="images/uniqlo-u-fw26-portrait.webp" alt="Model wearing a dark tailored jacket and carrying a black shoulder bag">
+        </div>
+        <footer>
+          <p class="article-meta"><span>01 / Fashion</span><time datetime="2026-08-29">29.08.26</time></p>
+          <h2>The Final Chapter of Uniqlo U</h2>
+        </footer>
+      </article>
+
+      <article class="article-card reveal" style="--delay: 80ms">
+        <div class="article-media article-placeholder" aria-hidden="true"></div>
+        <footer>
+          <p class="article-meta"><span>02 / Objects</span><span>Study</span></p>
+          <h2>A Study in Everyday Uniforms</h2>
+        </footer>
+      </article>
+
+      <article class="article-card reveal">
+        <div class="article-media article-placeholder shade-2" aria-hidden="true"></div>
+        <footer>
+          <p class="article-meta"><span>03 / Material</span><span>Study</span></p>
+          <h2>Materials That Improve With Time</h2>
+        </footer>
+      </article>
+
+      <article class="article-card reveal" style="--delay: 80ms">
+        <div class="article-media article-placeholder shade-3" aria-hidden="true"></div>
+        <footer>
+          <p class="article-meta"><span>04 / Place</span><span>Study</span></p>
+          <h2>Notes on Quiet Interiors</h2>
+        </footer>
+      </article>
     </section>
   </main>
 
   <footer class="site-footer"><p class="footer-brand">Smaller Hours<sup>©</sup></p></footer>
-  <a class="floating-top" id="floatingTop" href="#study" aria-label="Back to top"><span aria-hidden="true">↑</span></a>
+  <a class="floating-top" id="floatingTop" href="#content" aria-label="Back to top"><span aria-hidden="true">↑</span></a>
 
   <script>
     const root = document.documentElement;
