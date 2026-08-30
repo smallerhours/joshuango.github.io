@@ -128,9 +128,16 @@ function renderHomeLatest(post) {
 }
 
 function renderHomeArchive(posts) {
-  if (!posts.length) return '';
-  const cards = posts.map((post, index) => {
+  const cardCount = Math.max(3, posts.length);
+  const cards = Array.from({ length: cardCount }, (_, index) => {
     const layout = index % 3 === 0 ? 'project-landscape' : 'project-portrait';
+    const post = posts[index];
+    if (!post) {
+      return `        <article class="project project-placeholder ${layout} reveal" style="--delay: ${(index % 3) * 60}ms" aria-label="Future Study article">
+          <div class="project-visual"><div class="visual-fill shade-${(index % 3) + 1}" data-depth="${layout === 'project-landscape' ? '0.025' : '0.04'}"></div></div>
+          <footer><h3>Study</h3><p>Archive / forthcoming</p></footer>
+        </article>`;
+    }
     return `        <article class="project ${layout} reveal" style="--delay: ${(index % 3) * 60}ms">
           <a class="project-link" href="${escapeHtml(post.slug)}.html" aria-label="Read ${escapeHtml(post.title)}">
             <div class="project-visual"><img src="${escapeHtml(post.hero)}" alt="${escapeHtml(post.heroAlt)}" data-depth="${layout === 'project-landscape' ? '0.025' : '0.04'}"></div>
@@ -140,9 +147,9 @@ function renderHomeArchive(posts) {
   }).join('\n');
   return `    <section class="recent section-shell" id="recent" aria-labelledby="recent-title">
       <header class="recent-intro reveal">
-        <p class="kicker">Earlier studies</p>
-        <h2 id="recent-title">From the Study archive.</h2>
-        <p class="recent-note">Articles in reverse chronological order, beginning with the post before the latest.</p>
+        <p class="kicker">Study archive</p>
+        <h2 id="recent-title">Earlier studies.</h2>
+        <p class="recent-note">Previous articles appear here in reverse chronological order. Open positions remain ready for what comes next.</p>
       </header>
 
       <div class="project-grid" aria-label="Earlier Study articles">
