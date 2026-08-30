@@ -1,0 +1,9 @@
+{
+  "name": "smaller-hours-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-posts.mjs",
+    "build:posts": "node scripts/build-posts.mjs"
+  }
+}
