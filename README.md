@@ -19,3 +19,12 @@ Use this format on its own line:
 ```
 
 Images under Gallery use the editorial two-column layout. Images placed under Article become full-width editorial breaks between text sections.
+
+## Add Inspiration images
+
+1. Put portrait images in `images/inspiration/portrait/` and landscape images in `images/inspiration/landscape/`.
+2. Open `content/inspiration.md`.
+3. Add each image under Portrait or Landscape using the image format shown in that file.
+4. Run `npm run build:inspiration`, or run `npm run build` to refresh both Study and Inspiration.
+
+Portrait frames use a 3:4 width-to-height ratio. Landscape frames use a 3:2 width-to-height ratio. Images are automatically cropped to those consistent dimensions.

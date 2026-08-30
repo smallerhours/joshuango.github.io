@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-posts.mjs",
-    "build:posts": "node scripts/build-posts.mjs"
+    "build": "node scripts/build-posts.mjs && node scripts/build-inspiration.mjs",
+    "build:posts": "node scripts/build-posts.mjs",
+    "build:inspiration": "node scripts/build-inspiration.mjs"
   }
 }
