@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Study — articles and observations from Smaller Hours.">
-  <meta property="og:title" content="Study — Smaller Hours">
-  <meta property="og:description" content="Articles and observations on design, material, and use.">
+  <meta name="description" content="A Guide To: — practical guides from Smaller Hours.">
+  <meta property="og:title" content="A Guide To: — Smaller Hours">
+  <meta property="og:description" content="Practical, considered guides for objects, spaces, and everyday life.">
   <meta property="og:type" content="website">
-  <title>Study — Smaller Hours</title>
+  <title>A Guide To: — Smaller Hours</title>
   <link rel="stylesheet" href="style.css?v=33">
 </head>
 <body>
@@ -25,28 +25,25 @@
     <header class="menu-header"><button class="menu-close" id="menuClose" type="button" aria-label="Close menu">Close</button></header>
     <nav class="menu-nav" aria-label="Menu navigation">
       <a href="about.html"><span>01</span>About</a>
-      <a href="study.html" aria-current="page"><span>02</span>Study</a>
+      <a href="study.html"><span>02</span>Study</a>
       <a href="inspiration.html"><span>03</span>Inspiration</a>
-      <a href="guides.html"><span>04</span>A Guide To:</a>
+      <a href="guides.html" aria-current="page"><span>04</span>A Guide To:</a>
     </nav>
     <footer class="menu-footer"><img class="instagram-mark" src="images/instagram.svg" alt="Instagram"></footer>
   </aside>
 
-  <main class="study-archive" id="content">
+  <main class="guide-archive" id="content">
     <header class="archive-header">
-      <h1>Study</h1>
-      <p>Articles &amp; observations</p>
+      <h1>A Guide To:</h1>
+      <p>Practical notes for living well</p>
     </header>
-
-    <section class="article-grid" aria-label="Study articles">
-      <article class="article-card reveal" style="--delay: 0ms">
-        <a class="article-card-link" href="final-chapter-of-uniqlo-u.html" aria-label="Read The Final Chapter of Uniqlo U">
-          <div class="article-media">
-            <img src="images/uniqlo-u-fw26-portrait.webp" alt="Model wearing a dark tailored jacket and carrying a black shoulder bag">
-          </div>
+    <section class="guide-grid" aria-label="Smaller Hours guides">
+      <article class="guide-card reveal" style="--delay: 0ms">
+        <a class="guide-card-link" href="how-to-choose-things-that-last.html" aria-label="Open How to Choose Things That Last">
+          <div class="guide-card-media"><img src="images/hanok-essay-nuwa.jpg" alt="A quiet interior with natural materials and subdued light."></div>
           <footer>
-            <p class="article-meta"><span>01 / Fashion</span><time datetime="2026-08-29">29.08.26</time></p>
-            <h2>The Final Chapter of Uniqlo U</h2>
+            <p class="guide-card-meta"><span>01 / Objects &amp; Spaces</span><span>A Guide To:</span></p>
+            <h2>How to Choose Things That Last</h2>
           </footer>
         </a>
       </article>
@@ -65,7 +62,6 @@
     const sideMenu = document.getElementById('sideMenu');
     const floatingTop = document.getElementById('floatingTop');
     const localTime = document.getElementById('localTime');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let ticking = false;
 
     function setMenu(open) {
@@ -77,49 +73,28 @@
       if (open) menuClose.focus();
       else if (document.activeElement === menuClose) menuButton.focus();
     }
-
     function updateLocalDateTime() {
       localTime.textContent = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(new Date());
     }
-
     menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
     menuClose.addEventListener('click', () => setMenu(false));
     menuBackdrop.addEventListener('click', () => setMenu(false));
     sideMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setMenu(false); });
-    updateLocalDateTime();
-    window.setInterval(updateLocalDateTime, 1000);
-
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
+    }), { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
     document.querySelectorAll('.reveal').forEach((item) => revealObserver.observe(item));
-
     function updateScroll() {
       const y = window.scrollY;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       root.style.setProperty('--progress', max > 0 ? y / max : 0);
       header.classList.toggle('is-compact', y > 40);
-      floatingTop.classList.toggle('is-visible', y > window.innerHeight * 0.55);
-      if (!reducedMotion) {
-        document.querySelectorAll('[data-depth]').forEach((item) => {
-          const rect = item.parentElement.getBoundingClientRect();
-          const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * Number(item.dataset.depth);
-          item.style.setProperty('--depth', offset + 'px');
-        });
-      }
+      floatingTop.classList.toggle('is-visible', y > window.innerHeight * .55);
       ticking = false;
     }
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; }
-    }, { passive: true });
-    updateScroll();
+    window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; } }, { passive: true });
+    updateLocalDateTime(); window.setInterval(updateLocalDateTime, 1000); updateScroll();
   </script>
 </body>
 </html>

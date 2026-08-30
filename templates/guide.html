@@ -3,15 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="About Smaller Hours — observations on things shaped by time and use.">
-  <meta property="og:title" content="About — Smaller Hours">
-  <meta property="og:description" content="A place for things shaped by time.">
-  <meta property="og:type" content="website">
-  <title>About — Smaller Hours</title>
+  <meta name="description" content="{{EXCERPT}}">
+  <meta property="og:title" content="{{TITLE}} — Smaller Hours">
+  <meta property="og:description" content="{{EXCERPT}}">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="{{HERO}}">
+  <title>{{TITLE}} — Smaller Hours</title>
   <link rel="stylesheet" href="style.css?v=33">
 </head>
-<body class="about-page">
+<body class="guide-page">
   <a class="skip-link" href="#content">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
   <header class="site-header" id="siteHeader">
     <a class="wordmark" href="index.html" aria-label="Smaller Hours, home"><span>Smaller</span><span>Hours</span></a>
     <p class="header-note" aria-label="Visitor local time"><span id="localTime"></span></p>
@@ -22,27 +25,46 @@
   <aside class="side-menu" id="sideMenu" aria-hidden="true" aria-label="Site menu">
     <header class="menu-header"><button class="menu-close" id="menuClose" type="button" aria-label="Close menu">Close</button></header>
     <nav class="menu-nav" aria-label="Menu navigation">
-      <a href="about.html" aria-current="page"><span>01</span>About</a>
+      <a href="about.html"><span>01</span>About</a>
       <a href="study.html"><span>02</span>Study</a>
       <a href="inspiration.html"><span>03</span>Inspiration</a>
-      <a href="guides.html"><span>04</span>A Guide To:</a>
+      <a href="guides.html" aria-current="page"><span>04</span>A Guide To:</a>
     </nav>
     <footer class="menu-footer"><img class="instagram-mark" src="images/instagram.svg" alt="Instagram"></footer>
   </aside>
 
-  <main class="about-main" id="content">
-    <h1 class="about-title">About</h1>
-    <p class="about-copy">Smaller Hours is a place for observations on material, place, and objects that carry time well.</p>
+  <main class="guide-main" id="content">
+    <article>
+      <header class="guide-masthead">
+        <div class="guide-topline"><span>{{NUMBER}} / {{CATEGORY}}</span><span>A Guide To:</span></div>
+        <h1>{{TITLE}}</h1>
+        <p>{{EXCERPT}}</p>
+      </header>
+
+      <figure class="guide-hero article-reveal"><img src="{{HERO}}" alt="{{HERO_ALT}}"></figure>
+{{INTRODUCTION}}
+{{CHAPTERS}}
+{{CLOSING}}
+      <nav class="article-project-nav" aria-label="Guide navigation">
+        <a href="guides.html"><strong>All Guides</strong></a>
+        <a href="#content"><strong>Back to top ↑</strong></a>
+      </nav>
+    </article>
   </main>
 
+  <footer class="site-footer"><p class="footer-brand">Smaller Hours<sup>©</sup></p></footer>
+  <a class="floating-top" id="floatingTop" href="#content" aria-label="Back to top"><span aria-hidden="true">↑</span></a>
+
   <script>
+    const root = document.documentElement;
     const header = document.getElementById('siteHeader');
     const menuButton = document.getElementById('menuButton');
     const menuClose = document.getElementById('menuClose');
     const menuBackdrop = document.getElementById('menuBackdrop');
     const sideMenu = document.getElementById('sideMenu');
+    const floatingTop = document.getElementById('floatingTop');
     const localTime = document.getElementById('localTime');
-
+    let ticking = false;
     function setMenu(open) {
       document.body.classList.toggle('menu-open', open);
       menuButton.setAttribute('aria-expanded', String(open));
@@ -52,20 +74,28 @@
       if (open) menuClose.focus();
       else if (document.activeElement === menuClose) menuButton.focus();
     }
-
     function updateLocalDateTime() {
-      const now = new Date();
-      localTime.textContent = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
+      localTime.textContent = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(new Date());
     }
-
     menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
     menuClose.addEventListener('click', () => setMenu(false));
     menuBackdrop.addEventListener('click', () => setMenu(false));
     sideMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setMenu(false); });
-    window.addEventListener('scroll', () => header.classList.toggle('is-compact', window.scrollY > 40), { passive: true });
-    updateLocalDateTime();
-    window.setInterval(updateLocalDateTime, 1000);
+    const revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) { entry.target.classList.add('is-visible'); revealObserver.unobserve(entry.target); }
+    }), { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal, .article-reveal').forEach((item) => revealObserver.observe(item));
+    function updateScroll() {
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      root.style.setProperty('--progress', max > 0 ? y / max : 0);
+      header.classList.toggle('is-compact', y > 40);
+      floatingTop.classList.toggle('is-visible', y > window.innerHeight * .55);
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; } }, { passive: true });
+    updateLocalDateTime(); window.setInterval(updateLocalDateTime, 1000); updateScroll();
   </script>
 </body>
 </html>

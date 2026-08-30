@@ -68,7 +68,7 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
 .menu-header { display: flex; justify-content: flex-end; font-size: 9px; text-transform: uppercase; letter-spacing: .15em; }
 .menu-close { padding: 0; border: 0; background: none; color: inherit; font: inherit; text-transform: uppercase; letter-spacing: inherit; cursor: pointer; }
 .menu-nav { align-self: center; display: grid; }
-.menu-nav a { display: grid; grid-template-columns: 32px 1fr; align-items: start; padding: 12px 0; border-bottom: 1px solid var(--rule); font-family: var(--serif); font-size: clamp(54px, 6.5vw, 82px); line-height: .92; letter-spacing: -.055em; }
+.menu-nav a { display: grid; grid-template-columns: 32px 1fr; align-items: start; padding: 11px 0; border-bottom: 1px solid var(--rule); font-family: var(--serif); font-size: clamp(44px, 5vw, 66px); line-height: .92; letter-spacing: -.055em; }
 .menu-nav a:first-child { border-top: 1px solid var(--rule); }
 .menu-nav a span { padding-top: 7px; font-family: var(--sans); font-size: 8px; letter-spacing: .12em; }
 .menu-footer { display: grid; place-items: end center; }
@@ -112,6 +112,46 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
 .article-card footer { padding-top: 13px; }
 .article-meta { display: flex; justify-content: space-between; gap: 20px; padding-bottom: 17px; font-size: 8px; line-height: 1.2; letter-spacing: .14em; text-transform: uppercase; }
 .article-card h2 { display: -webkit-box; min-height: 2.85em; max-width: 14ch; overflow: hidden; font-family: var(--serif); font-size: clamp(32px, 4vw, 66px); font-weight: 400; line-height: .95; letter-spacing: -.045em; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.guide-archive { min-height: 100svh; padding: calc(var(--header-h) + 54px) var(--gutter) clamp(120px, 14vw, 220px); }
+.guide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(110px, 14vw, 230px) clamp(24px, 3vw, 54px); padding-top: clamp(70px, 9vw, 140px); }
+.guide-card { height: 100%; transition-delay: var(--delay, 0ms); }
+.guide-card-link { display: block; height: 100%; }
+.guide-card-media { aspect-ratio: 4 / 5; overflow: hidden; background: #383833; }
+.guide-card-media img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.22, 1, .36, 1); }
+.guide-card:hover .guide-card-media img { transform: scale(1.025); }
+.guide-card footer { padding-top: 13px; }
+.guide-card-meta { display: flex; justify-content: space-between; gap: 20px; padding-bottom: 17px; font-size: 8px; line-height: 1.2; letter-spacing: .14em; text-transform: uppercase; }
+.guide-card h2 { max-width: 14ch; font-family: var(--serif); font-size: clamp(38px, 4.6vw, 76px); font-weight: 400; line-height: .92; letter-spacing: -.05em; }
+.guide-empty { grid-column: 1 / -1; min-height: 56svh; display: grid; place-content: center; gap: 12px; text-align: center; }
+.guide-empty p { font-family: var(--serif); font-size: clamp(34px, 5vw, 76px); }
+.guide-empty span { font-size: 8px; letter-spacing: .14em; text-transform: uppercase; }
+.guide-main { padding-top: var(--header-h); }
+.guide-masthead { min-height: calc(100svh - var(--header-h)); display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr auto; gap: clamp(32px, 5vw, 80px); padding: clamp(26px, 3vw, 46px) var(--gutter) clamp(42px, 6vw, 92px); }
+.guide-topline { grid-column: 1 / -1; display: flex; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px solid var(--rule); font-size: 8px; letter-spacing: .15em; text-transform: uppercase; }
+.guide-masthead h1 { grid-column: 1 / -1; align-self: center; max-width: 9.5em; font-family: var(--serif); font-size: clamp(72px, 10vw, 166px); font-weight: 400; line-height: .86; letter-spacing: -.06em; }
+.guide-masthead > p { grid-column: 2; max-width: 33ch; font-family: var(--serif); font-size: clamp(18px, 1.55vw, 24px); line-height: 1.45; }
+.guide-hero { margin: 0 var(--gutter); overflow: hidden; background: #383833; }
+.guide-hero img { display: block; width: 100%; height: min(92svh, 1040px); object-fit: cover; }
+.guide-introduction { display: grid; grid-template-columns: .8fr 1.6fr; gap: clamp(60px, 10vw, 170px); align-items: start; padding: clamp(120px, 16vw, 260px) clamp(50px, 9vw, 150px); }
+.guide-index > p { padding-bottom: 15px; border-bottom: 1px solid var(--rule); font-size: 8px; letter-spacing: .14em; text-transform: uppercase; }
+.guide-index ol { margin: 0; padding: 0; list-style: none; }
+.guide-index li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.guide-index li span { padding-top: 4px; font-size: 8px; letter-spacing: .12em; }
+.guide-index a { font-family: var(--serif); font-size: clamp(17px, 1.5vw, 23px); line-height: 1.15; }
+.guide-intro-copy { display: grid; gap: 1.2em; max-width: 32em; }
+.guide-intro-copy p { font-family: var(--serif); font-size: clamp(25px, 3vw, 48px); line-height: 1.13; letter-spacing: -.025em; }
+.guide-chapter { display: grid; grid-template-columns: .75fr 1.25fr; gap: 0 clamp(50px, 8vw, 130px); margin: 0 var(--gutter); padding: clamp(80px, 10vw, 160px) clamp(24px, 5vw, 80px) clamp(120px, 15vw, 240px); border-top: 1px solid var(--rule); }
+.guide-chapter-heading { grid-column: 1; display: grid; grid-template-columns: 34px 1fr; align-content: start; gap: 14px; }
+.guide-chapter-heading span { padding-top: 9px; font-size: 8px; letter-spacing: .14em; }
+.guide-chapter-heading h2 { max-width: 10ch; font-family: var(--serif); font-size: clamp(42px, 5.5vw, 90px); font-weight: 400; line-height: .91; letter-spacing: -.05em; }
+.guide-chapter-copy { grid-column: 2; align-self: start; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 3vw, 52px); }
+.guide-chapter-copy p { font-family: var(--serif); font-size: clamp(17px, 1.3vw, 21px); line-height: 1.55; }
+.guide-chapter-image { grid-column: 1 / -1; margin: clamp(80px, 11vw, 180px) 0 0; overflow: hidden; background: #383833; }
+.guide-chapter-image img { display: block; width: 100%; max-height: 92svh; object-fit: cover; }
+.guide-chapter--reverse .guide-chapter-heading { grid-column: 2; }
+.guide-chapter--reverse .guide-chapter-copy { grid-column: 1; grid-row: 1; }
+.guide-closing { min-height: 70svh; display: grid; place-items: center; padding: clamp(100px, 15vw, 240px) var(--gutter); border-top: 1px solid var(--rule); }
+.guide-closing p { max-width: 19ch; text-align: center; font-family: var(--serif); font-size: clamp(44px, 6vw, 96px); line-height: .96; letter-spacing: -.045em; }
 .article-main { padding-top: var(--header-h); }
 .article-masthead { display: grid; grid-template-rows: auto 1fr; padding: clamp(26px, 3vw, 46px) var(--gutter) clamp(28px, 3.5vw, 52px); }
 .article-topline { display: grid; grid-template-columns: 1fr 1fr auto; gap: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--rule); font-size: 8px; letter-spacing: .15em; text-transform: uppercase; }
@@ -249,6 +289,21 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
   .study-archive { padding: calc(var(--header-h) + 38px) 20px 100px; }
   .article-grid { grid-template-columns: 1fr; gap: 96px; padding-top: 64px; }
   .article-card h2 { font-size: clamp(38px, 11vw, 64px); }
+  .guide-archive { padding: calc(var(--header-h) + 38px) 20px 100px; }
+  .guide-grid { grid-template-columns: 1fr; gap: 96px; padding-top: 64px; }
+  .guide-card h2 { font-size: clamp(42px, 12vw, 68px); }
+  .guide-masthead { min-height: calc(100svh - var(--header-h)); grid-template-columns: 1fr; padding: 22px 20px 44px; }
+  .guide-masthead h1, .guide-masthead > p { grid-column: 1; }
+  .guide-masthead h1 { font-size: clamp(64px, 19vw, 112px); }
+  .guide-hero { margin: 0 20px; }
+  .guide-hero img { height: 72svh; }
+  .guide-introduction { grid-template-columns: 1fr; padding: 100px 20px 130px; }
+  .guide-intro-copy p { font-size: clamp(30px, 8vw, 46px); }
+  .guide-chapter, .guide-chapter--reverse { grid-template-columns: 1fr; gap: 56px; margin: 0 20px; padding: 80px 0 120px; }
+  .guide-chapter-heading, .guide-chapter--reverse .guide-chapter-heading { grid-column: 1; grid-row: auto; }
+  .guide-chapter-copy, .guide-chapter--reverse .guide-chapter-copy { grid-column: 1; grid-row: auto; grid-template-columns: 1fr; }
+  .guide-chapter-image { grid-column: 1; margin-top: 34px; }
+  .guide-closing { min-height: 62svh; }
   .article-main { padding-top: var(--header-h); }
   .article-masthead { padding: 22px 20px 28px; }
   .article-topline { grid-template-columns: 1fr auto; }

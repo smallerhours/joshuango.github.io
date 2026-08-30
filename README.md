@@ -34,3 +34,14 @@ For the first use only, install the image preparation tool with `python3 -m pip 
 The build automatically rotates, center-crops, resizes, strips unnecessary metadata, converts to WebP, and compresses every image below 950 KB. Portrait outputs are up to 1500 × 2000 pixels (3:4). Landscape outputs are up to 2400 × 1600 pixels (3:2). Those dimensions preserve crisp detail on common 2× high-density screens without sending full camera-resolution files.
 
 The original uploads stay in the ignored `uploads` folders as local source files. Only the optimized WebP images are published. JPEG, PNG, WebP, TIFF, and TIF uploads are supported.
+
+## Add an A Guide To: post
+
+1. Copy `content/guides/_template.md` and rename it using the guide URL, for example `how-to-light-a-room.md`.
+2. Put the guide images in `images/` and update the image paths in the new content file.
+3. Edit the Introduction, numbered Chapters, and Closing sections. Add more chapters by repeating the `### 01 / Chapter title` format.
+4. Increase the `number` to control archive order. Guides intentionally have no date field.
+5. Keep `status: draft` while writing, then change it to `status: published`.
+6. Run `npm run build:guides`, or `npm run build` to refresh every section.
+
+The build refreshes `guides.html` and creates the individual guide page automatically. The archive cards, chapter index, numbered editorial sections, image treatment, closing statement, navigation, and side-menu link stay consistent for future guides.
