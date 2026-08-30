@@ -111,6 +111,60 @@ function renderCards(posts) {
       </article>`).join('\n\n');
 }
 
+function renderHomeLatest(post) {
+  return `    <section class="welcome section-shell" id="welcome" aria-labelledby="welcome-title">
+      <div class="welcome-grid">
+        <a class="hero-visual reveal-visual" href="${escapeHtml(post.slug)}.html" aria-label="Read ${escapeHtml(post.title)}">
+          <img class="hero-image" src="${escapeHtml(post.hero)}" alt="${escapeHtml(post.heroAlt)}" data-depth="0.045">
+        </a>
+        <div class="welcome-copy reveal">
+          <h1 id="welcome-title"><a href="${escapeHtml(post.slug)}.html">${escapeHtml(post.title)}</a></h1>
+          <div class="welcome-foot">
+            <p>${escapeHtml(post.excerpt)}</p>
+          </div>
+        </div>
+      </div>
+    </section>`;
+}
+
+function renderHomeArchive(posts) {
+  if (!posts.length) return '';
+  const cards = posts.map((post, index) => {
+    const layout = index % 3 === 0 ? 'project-landscape' : 'project-portrait';
+    return `        <article class="project ${layout} reveal" style="--delay: ${(index % 3) * 60}ms">
+          <a class="project-link" href="${escapeHtml(post.slug)}.html" aria-label="Read ${escapeHtml(post.title)}">
+            <div class="project-visual"><img src="${escapeHtml(post.hero)}" alt="${escapeHtml(post.heroAlt)}" data-depth="${layout === 'project-landscape' ? '0.025' : '0.04'}"></div>
+            <footer><h3>${escapeHtml(post.title)}</h3><p>${escapeHtml(post.category)} / ${formatDate(post.date, 'short')}</p></footer>
+          </a>
+        </article>`;
+  }).join('\n');
+  return `    <section class="recent section-shell" id="recent" aria-labelledby="recent-title">
+      <header class="recent-intro reveal">
+        <p class="kicker">Earlier studies</p>
+        <h2 id="recent-title">From the Study archive.</h2>
+        <p class="recent-note">Articles in reverse chronological order, beginning with the post before the latest.</p>
+      </header>
+
+      <div class="project-grid" aria-label="Earlier Study articles">
+${cards}
+      </div>
+    </section>`;
+}
+
+function replaceHomeRegion(source, name, output) {
+  const pattern = new RegExp(`(<!-- HOME_${name}_START -->)[\\s\\S]*?(<!-- HOME_${name}_END -->)`);
+  if (!pattern.test(source)) throw new Error(`index.html: missing HOME_${name} build markers.`);
+  return source.replace(pattern, `$1\n${output}\n    $2`);
+}
+
+function buildHome(posts) {
+  const homePath = path.join(siteDir, 'index.html');
+  let source = fs.readFileSync(homePath, 'utf8');
+  source = replaceHomeRegion(source, 'LATEST', renderHomeLatest(posts[0]));
+  source = replaceHomeRegion(source, 'ARCHIVE', renderHomeArchive(posts.slice(1)));
+  fs.writeFileSync(homePath, source);
+}
+
 function renderGallery(post) {
   if (!post.gallery.length) return '';
   return `      <div class="article-detail-grid" aria-label="Article images">
@@ -159,6 +213,7 @@ if (duplicateSlug) throw new Error(`Duplicate post slug: ${duplicateSlug.slug}`)
 
 const studyTemplate = fs.readFileSync(path.join(templatesDir, 'study.html'), 'utf8');
 fs.writeFileSync(path.join(siteDir, 'study.html'), replaceTokens(studyTemplate, { POST_CARDS: renderCards(posts) }));
+buildHome(posts);
 
 const articleTemplate = fs.readFileSync(path.join(templatesDir, 'article.html'), 'utf8');
 for (const post of posts) {
@@ -183,4 +238,4 @@ for (const post of posts) {
   fs.writeFileSync(path.join(siteDir, `${post.slug}.html`), replaceTokens(articleTemplate, values));
 }
 
-console.log(`Built ${posts.length} published post${posts.length === 1 ? '' : 's'} and refreshed study.html.`);
+console.log(`Built ${posts.length} published post${posts.length === 1 ? '' : 's'} and refreshed the homepage and study.html.`);
