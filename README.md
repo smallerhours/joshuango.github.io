@@ -22,9 +22,13 @@ Images under Gallery use the editorial two-column layout. Images placed under Ar
 
 ## Add Inspiration images
 
-1. Put portrait images in `images/inspiration/portrait/` and landscape images in `images/inspiration/landscape/`.
-2. Open `content/inspiration.md`.
-3. Add each image under Portrait or Landscape using the image format shown in that file.
-4. Run `npm run build:inspiration`, or run `npm run build` to refresh both Study and Inspiration.
+For the first use only, install the image preparation tool with `python3 -m pip install -r requirements.txt`.
 
-Portrait frames use a 3:4 width-to-height ratio. Landscape frames use a 3:2 width-to-height ratio. Images are automatically cropped to those consistent dimensions.
+1. Put original portrait images in `images/inspiration/uploads/portrait/` and original landscape images in `images/inspiration/uploads/landscape/`.
+2. Name each file with the caption you want, for example `weathered-oak-chair.jpg`.
+3. Run `npm run build:inspiration`, or run `npm run build` to refresh both Study and Inspiration.
+4. If needed, refine the automatically generated description in `content/inspiration.md`.
+
+The build automatically rotates, center-crops, resizes, strips unnecessary metadata, converts to WebP, and compresses every image below 950 KB. Portrait outputs are up to 1500 × 2000 pixels (3:4). Landscape outputs are up to 2400 × 1600 pixels (3:2). Those dimensions preserve crisp detail on common 2× high-density screens without sending full camera-resolution files.
+
+The original uploads stay in the ignored `uploads` folders as local source files. Only the optimized WebP images are published. JPEG, PNG, WebP, TIFF, and TIF uploads are supported.

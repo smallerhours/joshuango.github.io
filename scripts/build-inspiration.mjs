@@ -6,6 +6,7 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const siteDir = path.resolve(scriptDir, '..');
 const contentPath = path.join(siteDir, 'content', 'inspiration.md');
 const templatePath = path.join(siteDir, 'templates', 'inspiration.html');
+const maxImageBytes = 950 * 1024;
 
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -37,12 +38,15 @@ function validateImage(image) {
   if (!absolute.startsWith(siteDir + path.sep) || !fs.existsSync(absolute)) {
     throw new Error(`Inspiration image not found: ${image.src}`);
   }
+  if (fs.statSync(absolute).size > maxImageBytes) {
+    throw new Error(`${image.src} is over 950 KB. Put the original in images/inspiration/uploads and run npm run build:inspiration.`);
+  }
 }
 
 function renderGallery(images) {
   if (!images.length) return '      <p class="inspiration-empty">An evolving image archive.</p>';
   return images.map((image, index) => `      <figure class="inspiration-item inspiration-item--${image.format} reveal" style="--delay: ${(index % 3) * 60}ms">
-        <div class="inspiration-frame"><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy"></div>
+        <div class="inspiration-frame"><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy" decoding="async"></div>
         <figcaption>${escapeHtml(image.alt)}</figcaption>
       </figure>`).join('\n\n');
 }

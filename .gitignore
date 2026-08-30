@@ -1,0 +1,5 @@
+# Original Inspiration uploads are local source files. Publish only optimized outputs.
+images/inspiration/uploads/portrait/*
+images/inspiration/uploads/landscape/*
+!images/inspiration/uploads/portrait/.gitkeep
+!images/inspiration/uploads/landscape/.gitkeep
