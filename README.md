@@ -12,6 +12,8 @@ The Markdown file is the single source of truth. Its title, date, number, catego
 
 The build creates the individual article page automatically. Thumbnail dimensions, article metadata, navigation, typography, and image layouts remain consistent for every post.
 
+When a Study Markdown file is committed to the `main` branch on GitHub, the **Build Study pages** workflow runs automatically and commits the refreshed HTML. GitHub Pages then publishes the result. No separate HTML edit is needed.
+
 The homepage is refreshed at the same time. The newest published post becomes the large opening feature. Older posts follow below in reverse chronological order using the repeating layout: one landscape card, then two portrait cards.
 
 ### Writing images

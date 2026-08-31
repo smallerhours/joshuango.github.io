@@ -1,0 +1,47 @@
+name: Build Study pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/posts/**"
+      - "scripts/build-posts.mjs"
+      - "templates/article.html"
+      - "templates/study.html"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-study-main
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the website
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate Study pages from Markdown
+        run: node scripts/build-posts.mjs
+
+      - name: Publish generated HTML
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html'
+          if git diff --cached --quiet; then
+            echo "Generated HTML is already current."
+          else
+            git commit -m "Build Study pages from Markdown [skip ci]"
+            git push
+          fi
