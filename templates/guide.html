@@ -9,7 +9,7 @@
   <meta property="og:type" content="article">
   <meta property="og:image" content="{{HERO}}">
   <title>{{TITLE}} — Smaller Hours</title>
-  <link rel="stylesheet" href="style.css?v=33">
+  <link rel="stylesheet" href="style.css?v=34">
 </head>
 <body class="guide-page">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -35,14 +35,18 @@
 
   <main class="guide-main" id="content">
     <article>
-      <header class="guide-masthead">
-        <div class="guide-topline"><span>{{NUMBER}} / {{CATEGORY}}</span><span>A Guide To:</span></div>
-        <h1>{{TITLE}}</h1>
-        <p>{{EXCERPT}}</p>
+      <header class="guide-cover">
+        <img src="{{HERO}}" alt="{{HERO_ALT}}">
+        <div class="guide-cover-shade" aria-hidden="true"></div>
+        <div class="guide-cover-copy">
+          <p>A Guide To:</p>
+          <h1>{{TITLE}}</h1>
+          <p>{{EXCERPT}}</p>
+        </div>
+        <span class="guide-cover-scroll">Scroll to explore ↓</span>
       </header>
-
-      <figure class="guide-hero article-reveal"><img src="{{HERO}}" alt="{{HERO_ALT}}"></figure>
 {{INTRODUCTION}}
+{{CHAPTER_PREVIEW}}
 {{CHAPTERS}}
 {{CLOSING}}
       <nav class="article-project-nav" aria-label="Guide navigation">

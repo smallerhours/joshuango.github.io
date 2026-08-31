@@ -5,6 +5,7 @@
   "scripts": {
     "build": "node scripts/build-posts.mjs && node scripts/build-guides.mjs && python3 scripts/optimize-inspiration.py && node scripts/build-inspiration.mjs",
     "build:posts": "node scripts/build-posts.mjs",
+    "dev:posts": "node scripts/watch-posts.mjs",
     "build:guides": "node scripts/build-guides.mjs",
     "build:inspiration": "python3 scripts/optimize-inspiration.py && node scripts/build-inspiration.mjs",
     "check:inspiration": "python3 scripts/optimize-inspiration.py --check"

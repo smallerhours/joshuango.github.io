@@ -106,7 +106,7 @@ function renderCards(guides) {
   if (!guides.length) {
     return `      <div class="guide-empty"><p>No guides published yet.</p><span>Copy content/guides/_template.md to begin.</span></div>`;
   }
-  return guides.map((guide, index) => `      <article class="guide-card reveal" style="--delay: ${index % 2 ? 80 : 0}ms">
+  return guides.map((guide, index) => `      <article class="guide-card reveal ${index === 0 ? 'guide-card--featured' : ''}" style="--delay: ${index % 2 ? 80 : 0}ms">
         <a class="guide-card-link" href="${escapeHtml(guide.slug)}.html" aria-label="Open ${escapeHtml(guide.title)}">
           <div class="guide-card-media"><img src="${escapeHtml(guide.hero)}" alt="${escapeHtml(guide.heroAlt)}"></div>
           <footer>
@@ -118,11 +118,27 @@ function renderCards(guides) {
 }
 
 function renderIntroduction(guide) {
-  const index = guide.chapters.map((chapter) => `          <li><span>${escapeHtml(chapter.number)}</span><a href="#chapter-${escapeHtml(chapter.number)}">${escapeHtml(chapter.title)}</a></li>`).join('\n');
   const copy = guide.introduction.map((block) => `          <p>${renderInline(block.text)}</p>`).join('\n');
   return `      <section class="guide-introduction reveal" aria-label="Guide introduction">
-        <div class="guide-index"><p>In this guide</p><ol>\n${index}\n        </ol></div>
+        <p class="guide-intro-label">A Smaller Hours guide</p>
         <div class="guide-intro-copy">\n${copy}\n        </div>
+        <a class="guide-begin" href="#where-to-start">Begin the guide <span aria-hidden="true">↓</span></a>
+      </section>`;
+}
+
+function renderChapterPreview(guide) {
+  const cards = guide.chapters.map((chapter) => {
+    const image = chapter.blocks.find((block) => block.type === 'image');
+    if (!image) return '';
+    return `          <a class="guide-start-card reveal" href="#chapter-${escapeHtml(chapter.number)}">
+            <span class="guide-start-media"><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}"></span>
+            <span class="guide-start-caption"><small>${escapeHtml(chapter.number)}</small>${escapeHtml(chapter.title)}</span>
+          </a>`;
+  }).filter(Boolean).join('\n');
+  if (!cards) return '';
+  return `      <section class="guide-start" id="where-to-start" aria-labelledby="guide-start-title">
+        <header class="guide-start-heading reveal"><p>In this guide</p><h2 id="guide-start-title">Where to start?</h2></header>
+        <div class="guide-start-grid">\n${cards}\n        </div>
       </section>`;
 }
 
@@ -131,7 +147,7 @@ function renderChapters(guide) {
     const copy = chapter.blocks.filter((block) => block.type === 'paragraph').map((block) => `            <p>${renderInline(block.text)}</p>`).join('\n');
     const images = chapter.blocks.filter((block) => block.type === 'image').map((block) => `          <figure class="guide-chapter-image article-reveal"><img src="${escapeHtml(block.src)}" alt="${escapeHtml(block.alt)}"></figure>`).join('\n');
     return `      <section class="guide-chapter ${index % 2 ? 'guide-chapter--reverse' : ''}" id="chapter-${escapeHtml(chapter.number)}">
-        <header class="guide-chapter-heading reveal"><span>${escapeHtml(chapter.number)}</span><h2>${escapeHtml(chapter.title)}</h2></header>
+        <header class="guide-chapter-heading reveal"><span>Step ${escapeHtml(chapter.number)}</span><h2><b>${escapeHtml(chapter.number)}.</b> ${escapeHtml(chapter.title)}</h2></header>
         <div class="guide-chapter-copy reveal">\n${copy}\n        </div>
 ${images}
       </section>`;
@@ -152,7 +168,12 @@ const duplicateSlug = guides.find((guide, index) => guides.findIndex((candidate)
 if (duplicateSlug) throw new Error(`Duplicate guide slug: ${duplicateSlug.slug}`);
 
 const archiveTemplate = fs.readFileSync(path.join(templatesDir, 'guides.html'), 'utf8');
-fs.writeFileSync(path.join(siteDir, 'guides.html'), replaceTokens(archiveTemplate, { GUIDE_CARDS: renderCards(guides) }));
+const archiveLead = guides[0] || {};
+fs.writeFileSync(path.join(siteDir, 'guides.html'), replaceTokens(archiveTemplate, {
+  GUIDE_CARDS: renderCards(guides),
+  ARCHIVE_HERO: escapeHtml(archiveLead.hero || ''),
+  ARCHIVE_HERO_ALT: escapeHtml(archiveLead.heroAlt || 'Smaller Hours guide'),
+}));
 
 const guideTemplate = fs.readFileSync(path.join(templatesDir, 'guide.html'), 'utf8');
 for (const guide of guides) {
@@ -164,6 +185,7 @@ for (const guide of guides) {
     HERO: escapeHtml(guide.hero),
     HERO_ALT: escapeHtml(guide.heroAlt),
     INTRODUCTION: renderIntroduction(guide),
+    CHAPTER_PREVIEW: renderChapterPreview(guide),
     CHAPTERS: renderChapters(guide),
     CLOSING: renderClosing(guide),
   }));

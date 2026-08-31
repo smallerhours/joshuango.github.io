@@ -6,9 +6,11 @@
 2. Put the article images in `images/`.
 3. Edit the short details block and the Overview, Gallery, Quote, and Article sections.
 4. Keep `status: draft` while writing. Change it to `status: published` when ready.
-5. Run `npm run build:posts` from this folder.
+5. While writing, run `npm run dev:posts` once. Every save to a Study Markdown file will then refresh the homepage, Study index, and individual article page automatically. Use `npm run build:posts` when you only want to refresh them once.
 
-The build refreshes `study.html` and creates the individual article page automatically. Thumbnail dimensions, article metadata, navigation, typography, and image layouts remain consistent for every post.
+The Markdown file is the single source of truth. Its title, date, number, category, brand link, excerpt, hero image, captions, Overview, Gallery, Quote, and Article content are written into `study.html`, the homepage, and the individual article page. Do not edit those generated HTML sections directly—the next build intentionally replaces them from Markdown.
+
+The build creates the individual article page automatically. Thumbnail dimensions, article metadata, navigation, typography, and image layouts remain consistent for every post.
 
 The homepage is refreshed at the same time. The newest published post becomes the large opening feature. Older posts follow below in reverse chronological order using the repeating layout: one landscape card, then two portrait cards.
 
