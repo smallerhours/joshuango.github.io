@@ -1,5 +1,5 @@
 ---
-title: The Final Chapter of Uniqlo UUUUU
+title: The Final Chapter of Uniqlo U
 slug: final-chapter-of-uniqlo-u
 number: 01
 date: 2026-08-29
