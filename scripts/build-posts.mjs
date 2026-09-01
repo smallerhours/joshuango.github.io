@@ -203,7 +203,11 @@ function renderFacts(post) {
   const brand = post.brand
     ? `<div><dt>Brand</dt><dd>${post.brandUrl ? `<a href="${escapeHtml(post.brandUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(post.brand)}</a>` : escapeHtml(post.brand)}</dd></div>`
     : '';
+  const photography = post.photography
+    ? `<div><dt>Photography</dt><dd>${post.photographyUrl ? `<a href="${escapeHtml(post.photographyUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(post.photography)}</a>` : escapeHtml(post.photography)}</dd></div>`
+    : '';
   return `${brand}
+          ${photography}
           <div><dt>Category</dt><dd>${escapeHtml(post.category)}</dd></div>
           <div><dt>Published</dt><dd>${formatDate(post.date)}</dd></div>`;
 }

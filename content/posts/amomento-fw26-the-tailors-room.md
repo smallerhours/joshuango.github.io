@@ -6,6 +6,8 @@ date: 2026-09-01
 category: Fashion
 brand: AMOMENTO
 brandUrl: https://amomento.co/product/archive.html?cate_no=67
+photography: Courtesy of AMOMENTO
+photographyUrl: https://amomento.co/
 excerpt: A study of AMOMENTO’s FW26 collection, where the memory of the tailor’s shop becomes a language for contemporary dress.
 hero: images/amomento-fw26-look-01.webp
 heroAlt: Model in a belted brown jacket and hood walking through the AMOMENTO FW26 presentation

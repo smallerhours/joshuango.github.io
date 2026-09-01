@@ -6,6 +6,8 @@ date: 2026-09-01
 category: Objects
 brand: Optional brand or subject
 brandUrl: https://example.com/
+photography: Photographer name or image source
+photographyUrl: https://example.com/
 excerpt: A short description used by search engines and social sharing.
 hero: images/your-hero-image.jpg
 heroAlt: Describe the hero image for visitors using a screen reader
