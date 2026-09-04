@@ -12,7 +12,7 @@ excerpt: A study of AMOMENTO’s FW26 collection, where the memory of the tailor
 hero: images/amomento-fw26-look-01.webp
 heroAlt: Model in a belted brown jacket and hood walking through the AMOMENTO FW26 presentation
 heroCaptionLeft: AMOMENTO / FW26
-heroCaptionRight: Study 02
+heroCaptionRight: Project 02
 status: published
 ---
 

@@ -10,7 +10,7 @@ excerpt: A Smaller Hours study on proportion, restraint, and clothes made for da
 hero: images/uniqlo-u-fw26-portrait.webp
 heroAlt: Model wearing a dark tailored jacket and carrying a black shoulder bag
 heroCaptionLeft: Uniqlo U / FW26
-heroCaptionRight: Study 01
+heroCaptionRight: Project 01
 status: published
 ---
 

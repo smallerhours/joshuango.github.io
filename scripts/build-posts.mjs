@@ -99,12 +99,12 @@ function replaceTokens(template, values) {
 
 function renderCards(posts) {
   return posts.map((post, index) => `      <article class="article-card reveal" style="--delay: ${index % 2 ? 80 : 0}ms">
-        <a class="article-card-link" href="${escapeHtml(post.slug)}.html" aria-label="Read ${escapeHtml(post.title)}">
+        <a class="article-card-link" href="${escapeHtml(post.slug)}.html" aria-label="View ${escapeHtml(post.title)}">
           <div class="article-media">
             <img src="${escapeHtml(post.hero)}" alt="${escapeHtml(post.heroAlt)}">
           </div>
           <footer>
-            <p class="article-meta"><span>${escapeHtml(post.number)} / ${escapeHtml(post.category)}</span><time datetime="${escapeHtml(post.date)}">${formatDate(post.date, 'short')}</time></p>
+            <p class="article-meta"><span>${escapeHtml(post.number)}</span><span>${escapeHtml(post.category)}</span></p>
             <h2>${escapeHtml(post.title)}</h2>
           </footer>
         </a>
@@ -112,47 +112,45 @@ function renderCards(posts) {
 }
 
 function renderHomeLatest(post) {
-  return `    <section class="welcome section-shell" id="welcome" aria-labelledby="welcome-title">
-      <div class="welcome-grid">
-        <a class="hero-visual reveal-visual" href="${escapeHtml(post.slug)}.html" aria-label="Read ${escapeHtml(post.title)}">
-          <img class="hero-image" src="${escapeHtml(post.hero)}" alt="${escapeHtml(post.heroAlt)}" data-depth="0.045">
-        </a>
-        <div class="welcome-copy reveal">
-          <h1 id="welcome-title"><a href="${escapeHtml(post.slug)}.html">${escapeHtml(post.title)}</a></h1>
-          <div class="welcome-foot">
-            <p>${escapeHtml(post.excerpt)}</p>
-          </div>
-        </div>
-      </div>
+  return `    <section class="portfolio-feature" id="welcome" aria-labelledby="welcome-title">
+      <a class="portfolio-feature-link reveal-visual" href="${escapeHtml(post.slug)}.html" aria-label="View ${escapeHtml(post.title)}">
+        <img src="${escapeHtml(post.hero)}" alt="${escapeHtml(post.heroAlt)}">
+        <span class="portfolio-feature-shade" aria-hidden="true"></span>
+        <span class="portfolio-feature-label">Selected work / ${escapeHtml(post.number)}</span>
+        <h1 id="welcome-title">${escapeHtml(post.title)}</h1>
+        <span class="portfolio-feature-category">${escapeHtml(post.category)}</span>
+      </a>
     </section>`;
 }
 
 function renderHomeArchive(posts) {
-  const cardCount = Math.max(3, posts.length);
-  const cards = Array.from({ length: cardCount }, (_, index) => {
-    const layout = index % 3 === 0 ? 'project-landscape' : 'project-portrait';
-    const post = posts[index];
-    if (!post) {
-      return `        <article class="project project-placeholder ${layout} reveal" style="--delay: ${(index % 3) * 60}ms" aria-label="Future Study article">
-          <div class="project-visual"><div class="visual-fill shade-${(index % 3) + 1}" data-depth="${layout === 'project-landscape' ? '0.025' : '0.04'}"></div></div>
-          <footer><h3>Study</h3><p>Archive / forthcoming</p></footer>
-        </article>`;
-    }
-    return `        <article class="project ${layout} reveal" style="--delay: ${(index % 3) * 60}ms">
-          <a class="project-link" href="${escapeHtml(post.slug)}.html" aria-label="Read ${escapeHtml(post.title)}">
-            <div class="project-visual"><img src="${escapeHtml(post.hero)}" alt="${escapeHtml(post.heroAlt)}" data-depth="${layout === 'project-landscape' ? '0.025' : '0.04'}"></div>
-            <footer><h3>${escapeHtml(post.title)}</h3><p>${escapeHtml(post.category)} / ${formatDate(post.date, 'short')}</p></footer>
+  const seen = new Set([posts[0].hero]);
+  const images = [];
+  posts.forEach((post) => {
+    const candidates = [
+      ...post.gallery,
+      ...post.article.filter((block) => block.type === 'image'),
+      { src: post.hero, alt: post.heroAlt },
+    ];
+    candidates.forEach((item) => {
+      if (!seen.has(item.src)) {
+        seen.add(item.src);
+        images.push({ ...item, post });
+      }
+    });
+  });
+  const cards = images.map((image, index) => `        <figure class="portfolio-tile portfolio-tile-${index % 4} reveal" style="--delay: ${(index % 3) * 55}ms">
+          <a href="${escapeHtml(image.post.slug)}.html" aria-label="View ${escapeHtml(image.post.title)}">
+            <img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}">
           </a>
-        </article>`;
-  }).join('\n');
-  return `    <section class="recent section-shell" id="recent" aria-labelledby="recent-title">
-      <header class="recent-intro reveal">
-        <p class="kicker">Study archive</p>
-        <h2 id="recent-title">Earlier studies.</h2>
-        <p class="recent-note">Previous articles appear here in reverse chronological order. Open positions remain ready for what comes next.</p>
+          <figcaption><span>${escapeHtml(image.post.title)}</span><span>${String(index + 1).padStart(2, '0')}</span></figcaption>
+        </figure>`).join('\n');
+  return `    <section class="portfolio-index" id="recent" aria-labelledby="recent-title">
+      <header class="portfolio-index-header reveal">
+        <h2 id="recent-title">Selected work</h2>
+        <a href="study.html">View all projects</a>
       </header>
-
-      <div class="project-grid" aria-label="Earlier Study articles">
+      <div class="portfolio-grid" aria-label="Photography portfolio">
 ${cards}
       </div>
     </section>`;
@@ -168,14 +166,17 @@ function buildHome(posts) {
   const homePath = path.join(siteDir, 'index.html');
   let source = fs.readFileSync(homePath, 'utf8');
   source = replaceHomeRegion(source, 'LATEST', renderHomeLatest(posts[0]));
-  source = replaceHomeRegion(source, 'ARCHIVE', renderHomeArchive(posts.slice(1)));
+  source = replaceHomeRegion(source, 'ARCHIVE', renderHomeArchive(posts));
   fs.writeFileSync(homePath, source);
 }
 
 function renderGallery(post) {
-  if (!post.gallery.length) return '';
-  return `      <div class="article-detail-grid" aria-label="Article images">
-${post.gallery.map((image, index) => `        <figure class="article-detail ${index % 2 ? 'article-detail-close' : 'article-detail-tall'} article-reveal"><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}"></figure>`).join('\n')}
+  const seen = new Set([post.hero]);
+  const images = [...post.gallery, ...post.article.filter((block) => block.type === 'image')]
+    .filter((image) => !seen.has(image.src) && seen.add(image.src));
+  if (!images.length) return '';
+  return `      <div class="portfolio-sequence" aria-label="Project photographs">
+${images.map((image, index) => `        <figure class="portfolio-sequence-image portfolio-sequence-image-${index % 3} article-reveal"><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}"></figure>`).join('\n')}
       </div>`;
 }
 
@@ -209,7 +210,7 @@ function renderFacts(post) {
   return `${brand}
           ${photography}
           <div><dt>Category</dt><dd>${escapeHtml(post.category)}</dd></div>
-          <div><dt>Published</dt><dd>${formatDate(post.date)}</dd></div>`;
+          <div><dt>Year</dt><dd>${post.date.slice(0, 4)}</dd></div>`;
 }
 
 const postFiles = fs.readdirSync(postsDir)
@@ -241,12 +242,12 @@ for (const post of posts) {
     HERO_CAPTION_LEFT: escapeHtml(post.heroCaptionLeft || post.brand || post.category),
     HERO_CAPTION_RIGHT: escapeHtml(post.heroCaptionRight || `Study ${post.number}`),
     FACTS: renderFacts(post),
-    OVERVIEW: post.overview.map((block) => `          <p>${renderInline(block.text)}</p>`).join('\n'),
+    OVERVIEW: post.overview.slice(0, 1).map((block) => `          <p>${renderInline(block.text)}</p>`).join('\n'),
     GALLERY: renderGallery(post),
-    QUOTE: post.quote ? `      <blockquote class="article-quote reveal">${renderInline(post.quote)}</blockquote>` : '',
-    ARTICLE: renderArticleBlocks(post),
+    QUOTE: '',
+    ARTICLE: '',
   };
   fs.writeFileSync(path.join(siteDir, `${post.slug}.html`), replaceTokens(articleTemplate, values));
 }
 
-console.log(`Built ${posts.length} published post${posts.length === 1 ? '' : 's'} and refreshed the homepage and study.html.`);
+console.log(`Built ${posts.length} published project${posts.length === 1 ? '' : 's'} and refreshed the homepage and Work index.`);

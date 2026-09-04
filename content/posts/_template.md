@@ -1,6 +1,6 @@
 ---
-title: Your article title
-slug: your-article-url
+title: Your project title
+slug: your-project-url
 number: 02
 date: 2026-09-01
 category: Objects
@@ -12,15 +12,13 @@ excerpt: A short description used by search engines and social sharing.
 hero: images/your-hero-image.jpg
 heroAlt: Describe the hero image for visitors using a screen reader
 heroCaptionLeft: Subject / Collection
-heroCaptionRight: Study 02
+heroCaptionRight: Project 02
 status: draft
 ---
 
 ## Overview
 
-Write one or two short introductory paragraphs here.
-
-This second paragraph will sit beside the first on larger screens.
+Write one concise project note here. Only the first paragraph is shown on the project page.
 
 ## Gallery
 
@@ -28,16 +26,10 @@ This second paragraph will sit beside the first on larger screens.
 
 ![Describe the second image](images/your-second-image.jpg)
 
-## Quote
-
-Add one short pull quote here.
-
 ## Article
 
-Write the main article in paragraphs. Paragraphs are paired into balanced text rows.
+Optional private notes can live here without appearing on the portfolio page. Images placed here are included in the project sequence.
 
-Add images between paragraphs whenever you want a full-width image in the article.
+![Describe this project image](images/your-project-image.jpg)
 
-![Describe this article image](images/your-article-image.jpg)
-
-Continue writing after the image. Change status to published when the post is ready.
+Change status to published when the project is ready.

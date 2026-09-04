@@ -6,10 +6,10 @@
   <meta name="description" content="{{EXCERPT}}">
   <meta property="og:title" content="{{TITLE}} — Smaller Hours">
   <meta property="og:description" content="{{EXCERPT}}">
-  <meta property="og:type" content="article">
-  <meta property="og:image" content="{{HERO}}">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://smallerhours.github.io/{{HERO}}">
   <title>{{TITLE}} — Smaller Hours</title>
-  <link rel="stylesheet" href="style.css?v=33">
+  <link rel="stylesheet" href="style.css?v=35">
 </head>
 <body class="article-page">
   <a class="skip-link" href="#content">Skip to content</a>
@@ -25,10 +25,8 @@
   <aside class="side-menu" id="sideMenu" aria-hidden="true" aria-label="Site menu">
     <header class="menu-header"><button class="menu-close" id="menuClose" type="button" aria-label="Close menu">Close</button></header>
     <nav class="menu-nav" aria-label="Menu navigation">
-      <a href="about.html"><span>01</span>About</a>
-      <a href="study.html" aria-current="page"><span>02</span>Study</a>
-      <a href="inspiration.html"><span>03</span>Inspiration</a>
-      <a href="guides.html"><span>04</span>A Guide To:</a>
+      <a href="study.html" aria-current="page"><span>01</span>Work</a>
+      <a href="about.html"><span>02</span>About</a>
     </nav>
     <footer class="menu-footer"><img class="instagram-mark" src="images/instagram.svg" alt="Instagram"></footer>
   </aside>
@@ -38,8 +36,8 @@
       <header class="article-masthead">
         <div class="article-topline">
           <span>{{NUMBER}}</span>
-          <span>Study / {{CATEGORY}}</span>
-          <time datetime="{{DATE_ISO}}">{{DATE_SHORT}}</time>
+          <span>Project / {{CATEGORY}}</span>
+          <span>Smaller Hours</span>
         </div>
         <h1>{{TITLE}}</h1>
       </header>
@@ -49,7 +47,7 @@
         <figcaption class="article-caption"><span>{{HERO_CAPTION_LEFT}}</span><span>{{HERO_CAPTION_RIGHT}}</span></figcaption>
       </figure>
 
-      <section class="article-overview reveal" aria-label="Article overview">
+      <section class="article-overview reveal" aria-label="Project information">
         <dl class="article-facts">
           {{FACTS}}
         </dl>
@@ -64,8 +62,8 @@
 
 {{ARTICLE}}
 
-      <nav class="article-project-nav" aria-label="Article navigation">
-        <a href="study.html"><strong>All Studies</strong></a>
+      <nav class="article-project-nav" aria-label="Project navigation">
+        <a href="study.html"><strong>All Work</strong></a>
         <a href="#content"><strong>Back to top ↑</strong></a>
       </nav>
     </article>

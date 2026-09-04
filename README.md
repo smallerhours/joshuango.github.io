@@ -1,22 +1,18 @@
 # Smaller Hours
 
-## Add a Study post
+Smaller Hours is an image-first photography portfolio. The existing Markdown publishing system remains the source of truth: each file in `content/posts/` represents one photographic project, and the build step updates the home gallery, Work index, and individual project page together.
 
-1. Copy `content/posts/_template.md` and rename it using the article URL, for example `a-study-in-wood.md`.
-2. Put the article images in `images/`.
-3. Edit the short details block and the Overview, Gallery, Quote, and Article sections.
-4. Keep `status: draft` while writing. Change it to `status: published` when ready.
-5. While writing, run `npm run dev:posts` once. Every save to a Study Markdown file will then refresh the homepage, Study index, and individual article page automatically. Use `npm run build:posts` when you only want to refresh them once.
+## Add a photography project
 
-The Markdown file is the single source of truth. Its title, date, number, category, brand link, excerpt, hero image, captions, Overview, Gallery, Quote, and Article content are written into `study.html`, the homepage, and the individual article page. Do not edit those generated HTML sections directly—the next build intentionally replaces them from Markdown.
+1. Duplicate a Markdown file in `content/posts/`.
+2. Replace the title, slug, project number, category, credits, hero image, and image descriptions.
+3. Put additional photographs under `## Gallery` using normal Markdown image syntax.
+4. Keep `## Overview` to one short paragraph; it is the only project description shown.
+5. Run `npm run build:posts`.
 
-The build creates the individual article page automatically. Thumbnail dimensions, article metadata, navigation, typography, and image layouts remain consistent for every post.
+The first published project by date becomes the full-screen home image. Its additional photographs and the remaining projects populate the home gallery automatically. Original longer notes can stay in Markdown without appearing on the image-led project page.
 
-When a Study Markdown file is committed to the `main` branch on GitHub, the **Build Study pages** workflow runs automatically and commits the refreshed HTML. GitHub Pages then publishes the result. No separate HTML edit is needed.
-
-The homepage is refreshed at the same time. The newest published post becomes the large opening feature. Older posts follow below in reverse chronological order using the repeating layout: one landscape card, then two portrait cards.
-
-### Writing images
+### Adding images
 
 Use this format on its own line:
 
@@ -24,28 +20,6 @@ Use this format on its own line:
 ![A useful description of the image](images/your-image.jpg)
 ```
 
-Images under Gallery use the editorial two-column layout. Images placed under Article become full-width editorial breaks between text sections.
+Images under Gallery form the alternating visual sequence. Images under Article are also included, allowing older Markdown files to keep working. Portrait and landscape photographs preserve their natural proportions.
 
-## Add Inspiration images
-
-For the first use only, install the image preparation tool with `python3 -m pip install -r requirements.txt`.
-
-1. Put original portrait images in `images/inspiration/uploads/portrait/` and original landscape images in `images/inspiration/uploads/landscape/`.
-2. Name each file with the caption you want, for example `weathered-oak-chair.jpg`.
-3. Run `npm run build:inspiration`, or run `npm run build` to refresh both Study and Inspiration.
-4. If needed, refine the automatically generated description in `content/inspiration.md`.
-
-The build automatically rotates, center-crops, resizes, strips unnecessary metadata, converts to WebP, and compresses every image below 950 KB. Portrait outputs are up to 1500 × 2000 pixels (3:4). Landscape outputs are up to 2400 × 1600 pixels (3:2). Those dimensions preserve crisp detail on common 2× high-density screens without sending full camera-resolution files.
-
-The original uploads stay in the ignored `uploads` folders as local source files. Only the optimized WebP images are published. JPEG, PNG, WebP, TIFF, and TIF uploads are supported.
-
-## Add an A Guide To: post
-
-1. Copy `content/guides/_template.md` and rename it using the guide URL, for example `how-to-light-a-room.md`.
-2. Put the guide images in `images/` and update the image paths in the new content file.
-3. Edit the Introduction, numbered Chapters, and Closing sections. Add more chapters by repeating the `### 01 / Chapter title` format.
-4. Increase the `number` to control archive order. Guides intentionally have no date field.
-5. Keep `status: draft` while writing, then change it to `status: published`.
-6. Run `npm run build:guides`, or `npm run build` to refresh every section.
-
-The build refreshes `guides.html` and creates the individual guide page automatically. The archive cards, chapter index, numbered editorial sections, image treatment, closing statement, navigation, and side-menu link stay consistent for future guides.
+While editing, run `npm run dev:posts` once. Every save refreshes the homepage, Work index, and project pages. When a project Markdown file is committed to `main`, the GitHub workflow rebuilds and publishes the portfolio automatically.
