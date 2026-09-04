@@ -120,36 +120,49 @@ function renderCards(posts) {
 function renderHomeLatest(post) {
   const starterSlides = [
     {
-      src: 'images/home/japandi-01.jpg',
-      alt: 'A quiet Japanese room with tatami, timber, and soft natural light',
-      credit: 'Bruno Makori / Pexels',
-      creditUrl: 'https://www.pexels.com/photo/room-in-a-traditional-japanese-house-20025763/',
+      src: 'images/portfolio/bar-8.jpg',
+      alt: 'A softly lit bar interior with a mirrored ceiling',
+      credit: 'Bar 8 / Joshua Ngo',
+      creditUrl: 'personal.html',
     },
     {
-      src: 'images/home/japandi-02.jpg',
-      alt: 'A warm Japandi living room with textured walls and a pale sofa',
-      credit: 'Pavel Morillo / Pexels',
-      creditUrl: 'https://www.pexels.com/photo/cozy-japandi-living-room-with-modern-design-29383009/',
+      src: 'images/portfolio/museum-san.jpg',
+      alt: 'Stone walls and trees seen through the tall windows of Museum SAN',
+      credit: 'Museum SAN / Joshua Ngo',
+      creditUrl: 'personal.html',
     },
     {
-      src: 'images/home/japandi-03.jpg',
-      alt: 'A minimal interior with wooden beams and low furniture',
-      credit: 'Junseob Yoon / Pexels',
-      creditUrl: 'https://www.pexels.com/photo/a-room-with-minimalist-interior-10421514/',
+      src: 'images/portfolio/concrete-wall.jpg',
+      alt: 'A concrete terrace framed by a mountain landscape',
+      credit: 'Concrete Wall / Joshua Ngo',
+      creditUrl: 'personal.html',
+    },
+    {
+      src: 'images/portfolio/songdo.jpg',
+      alt: 'Songdo skyline reflected in a park lake',
+      credit: 'Songdo / Joshua Ngo',
+      creditUrl: 'personal.html',
+    },
+    {
+      src: 'images/portfolio/yongsan-01.jpg',
+      alt: 'A colonnade opening onto a green garden in Yongsan',
+      credit: 'Yongsan / Joshua Ngo',
+      creditUrl: 'personal.html',
+    },
+    {
+      src: 'images/portfolio/yongsan-02.jpg',
+      alt: 'A symmetrical stone memorial passage in Yongsan',
+      credit: 'Yongsan / Joshua Ngo',
+      creditUrl: 'personal.html',
+    },
+    {
+      src: 'images/portfolio/yongsan-03.jpg',
+      alt: 'A solitary figure crossing a monumental stone interior',
+      credit: 'Yongsan / Joshua Ngo',
+      creditUrl: 'personal.html',
     },
   ];
-  const projectImages = post ? [
-    { src: post.hero, alt: post.heroAlt },
-    ...post.gallery,
-    ...post.article.filter((block) => block.type === 'image'),
-  ].filter((image, index, list) => list.findIndex((candidate) => candidate.src === image.src) === index)
-    .slice(0, 5)
-    .map((image) => ({
-      ...image,
-      credit: `${post.title} / Joshua Ngo`,
-      creditUrl: `${post.slug}.html`,
-    })) : [];
-  const slides = projectImages.length > 1 ? projectImages : starterSlides;
+  const slides = starterSlides;
   return `    <section class="home-slideshow" id="welcome" aria-label="Featured photography slideshow">
       <div class="home-slides" data-slideshow>
 ${slides.map((slide, index) => `        <figure class="home-slide${index === 0 ? ' is-active' : ''}" aria-hidden="${index === 0 ? 'false' : 'true'}">

@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{{EXCERPT}}">
-  <meta property="og:title" content="{{TITLE}} — Joshua Ngo">
-  <meta property="og:description" content="{{EXCERPT}}">
+  <meta name="description" content="Personal photography by Joshua Ngo.">
+  <meta property="og:title" content="Personal — Joshua Ngo">
+  <meta property="og:description" content="Personal observations of architecture, space, and place.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://joshuango.github.io/{{HERO}}">
-  <title>{{TITLE}} — Joshua Ngo</title>
+  <meta property="og:image" content="https://smallerhours.github.io/joshuango.github.io/images/portfolio/museum-san.jpg">
+  <title>Personal — Joshua Ngo</title>
   <link rel="stylesheet" href="style.css?v=38">
 </head>
-<body class="article-page">
+<body class="personal-page">
   <a class="skip-link" href="#content">Skip to content</a>
   <div class="scroll-progress" aria-hidden="true"></div>
 
@@ -27,49 +27,29 @@
     <nav class="menu-nav" aria-label="Menu navigation">
       <div class="menu-group">
         <p class="menu-group-title"><span>01</span>Portfolio</p>
-        <div class="menu-subnav"><a href="personal.html">Personal</a><a href="study.html" aria-current="page">Work</a></div>
+        <div class="menu-subnav"><a href="personal.html" aria-current="page">Personal</a><a href="study.html">Work</a></div>
       </div>
       <a class="menu-primary" href="about.html"><span>02</span>About</a>
     </nav>
     <footer class="menu-footer"><img class="instagram-mark" src="images/instagram.svg" alt="Instagram"></footer>
   </aside>
 
-  <main class="article-main" id="content">
-    <article>
-      <header class="article-masthead">
-        <div class="article-topline">
-          <span>{{NUMBER}}</span>
-          <span>Project / {{CATEGORY}}</span>
-          <span>Joshua Ngo</span>
-        </div>
-        <h1>{{TITLE}}</h1>
-      </header>
+  <main class="personal-main" id="content">
+    <header class="personal-intro">
+      <p>Portfolio / Personal</p>
+      <h1>Personal</h1>
+      <p>Observations of architecture, space, and place.</p>
+    </header>
 
-      <figure class="article-lead article-reveal">
-        <img src="{{HERO}}" alt="{{HERO_ALT}}">
-        <figcaption class="article-caption"><span>{{HERO_CAPTION_LEFT}}</span><span>{{HERO_CAPTION_RIGHT}}</span></figcaption>
-      </figure>
-
-      <section class="article-overview reveal" aria-label="Project information">
-        <dl class="article-facts">
-          {{FACTS}}
-        </dl>
-        <div class="article-overview-copy">
-{{OVERVIEW}}
-        </div>
-      </section>
-
-{{GALLERY}}
-
-{{QUOTE}}
-
-{{ARTICLE}}
-
-      <nav class="article-project-nav" aria-label="Project navigation">
-        <a href="study.html"><strong>All Work</strong></a>
-        <a href="#content"><strong>Back to top ↑</strong></a>
-      </nav>
-    </article>
+    <section class="personal-grid" aria-label="Personal photography">
+      <figure class="personal-image personal-image-wide reveal"><img src="images/portfolio/bar-8.jpg" alt="A softly lit bar interior with a mirrored ceiling"><figcaption><span>Bar 8</span><span>01</span></figcaption></figure>
+      <figure class="personal-image personal-image-left reveal"><img src="images/portfolio/museum-san.jpg" alt="Stone walls and trees seen through the tall windows of Museum SAN" loading="lazy"><figcaption><span>Museum SAN</span><span>02</span></figcaption></figure>
+      <figure class="personal-image personal-image-right reveal"><img src="images/portfolio/concrete-wall.jpg" alt="A concrete terrace framed by a mountain landscape" loading="lazy"><figcaption><span>Concrete Wall</span><span>03</span></figcaption></figure>
+      <figure class="personal-image personal-image-wide reveal"><img src="images/portfolio/songdo.jpg" alt="Songdo skyline reflected in a park lake" loading="lazy"><figcaption><span>Songdo</span><span>04</span></figcaption></figure>
+      <figure class="personal-image personal-image-left reveal"><img src="images/portfolio/yongsan-01.jpg" alt="A colonnade opening onto a green garden in Yongsan" loading="lazy"><figcaption><span>Yongsan</span><span>05</span></figcaption></figure>
+      <figure class="personal-image personal-image-right reveal"><img src="images/portfolio/yongsan-02.jpg" alt="A symmetrical stone memorial passage in Yongsan" loading="lazy"><figcaption><span>Yongsan</span><span>06</span></figcaption></figure>
+      <figure class="personal-image personal-image-portrait reveal"><img src="images/portfolio/yongsan-03.jpg" alt="A solitary figure crossing a monumental stone interior" loading="lazy"><figcaption><span>Yongsan</span><span>07</span></figcaption></figure>
+    </section>
   </main>
 
   <footer class="site-footer"><p class="footer-brand">© 2026 Joshua Ngo</p></footer>
@@ -121,8 +101,8 @@
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
-    document.querySelectorAll('.reveal, .article-reveal').forEach((item) => revealObserver.observe(item));
+    }, { threshold: .08, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach((item) => revealObserver.observe(item));
     window.addEventListener('scroll', () => {
       if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; }
     }, { passive: true });
