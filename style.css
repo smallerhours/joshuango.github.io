@@ -533,3 +533,37 @@ body { font-family: var(--sans); }
   .article-project-nav strong { font-size: clamp(26px, 8vw, 42px); }
   .site-footer { min-height: 14svh; }
 }
+
+/* Full-screen photographic opening */
+.home-page .site-header:not(.is-compact) { color: #fff; }
+.home-page .scroll-progress { background: #fff; }
+.home-slideshow { position: relative; height: 100svh; min-height: 620px; overflow: hidden; background: #292925; color: #fff; }
+.home-slides, .home-slide { position: absolute; inset: 0; }
+.home-slide { margin: 0; opacity: 0; visibility: hidden; z-index: 0; transition: opacity 1.8s cubic-bezier(.4, 0, .2, 1), visibility 1.8s; }
+.home-slide.is-active { opacity: 1; visibility: visible; z-index: 1; }
+.home-slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.18), transparent 36%, rgba(0,0,0,.28)); pointer-events: none; }
+.home-slide img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: blur(3px); transform: scale(1.055); transition: filter 2.2s ease, transform 7.5s cubic-bezier(.2,.55,.25,1); }
+.home-slide.is-active img { filter: blur(0); transform: scale(1.01); }
+.home-slide figcaption { position: absolute; right: var(--gutter); bottom: 24px; z-index: 2; font-size: 8px; letter-spacing: .13em; text-transform: uppercase; }
+.home-slide figcaption a { opacity: .78; transition: opacity .25s ease; }
+.home-slide figcaption a:hover { opacity: 1; }
+.home-slide-next { position: absolute; inset: 0; z-index: 3; width: 100%; padding: 0; border: 0; background: transparent; cursor: e-resize; }
+.home-slide-next:focus-visible { outline: 1px solid rgba(255,255,255,.85); outline-offset: -10px; }
+.home-slide-ui { position: absolute; right: var(--gutter); bottom: 24px; left: var(--gutter); z-index: 4; display: flex; justify-content: space-between; padding-right: min(270px, 28vw); pointer-events: none; font-size: 8px; letter-spacing: .13em; text-transform: uppercase; }
+.home-slide-counter { font-variant-numeric: tabular-nums; }
+
+.site-footer { min-height: 110px; align-content: end; padding-block: 28px; }
+.footer-brand { font-family: var(--sans); font-size: 8px; font-weight: 400; line-height: 1; letter-spacing: .14em; text-transform: uppercase; }
+
+@media (max-width: 800px) {
+  .home-slideshow { min-height: 540px; }
+  .home-slide img { object-position: center; }
+  .home-slide figcaption { right: 20px; bottom: 18px; max-width: 48%; text-align: right; }
+  .home-slide-ui { right: 20px; bottom: 18px; left: 20px; padding-right: 52%; }
+  .site-footer { min-height: 92px; padding-block: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-slide { transition: none; }
+  .home-slide img, .home-slide.is-active img { filter: none; transform: none; transition: none; }
+}

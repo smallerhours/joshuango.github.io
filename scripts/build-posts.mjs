@@ -118,21 +118,49 @@ function renderCards(posts) {
 }
 
 function renderHomeLatest(post) {
-  if (!post) {
-    return `    <section class="portfolio-empty-home" id="welcome">
-      <p class="portfolio-empty-kicker">Joshua Ngo / Photographer</p>
-      <div class="portfolio-empty-title"><span>Selected</span><h1>Photography</h1><span>Portfolio</span></div>
-      <a class="portfolio-empty-link" href="study.html">View projects <span aria-hidden="true">↘</span></a>
-    </section>`;
-  }
-  return `    <section class="portfolio-feature" id="welcome" aria-labelledby="welcome-title">
-      <a class="portfolio-feature-link reveal-visual" href="${escapeHtml(post.slug)}.html" aria-label="View ${escapeHtml(post.title)}">
-        <img src="${escapeHtml(post.hero)}" alt="${escapeHtml(post.heroAlt)}">
-      </a>
-      <div class="portfolio-feature-caption">
-        <span>Latest / ${escapeHtml(post.number)}</span>
-        <h1 id="welcome-title"><a href="${escapeHtml(post.slug)}.html">${escapeHtml(post.title)}</a></h1>
-        <span>${escapeHtml(post.category)}</span>
+  const starterSlides = [
+    {
+      src: 'images/home/japandi-01.jpg',
+      alt: 'A quiet Japanese room with tatami, timber, and soft natural light',
+      credit: 'Bruno Makori / Pexels',
+      creditUrl: 'https://www.pexels.com/photo/room-in-a-traditional-japanese-house-20025763/',
+    },
+    {
+      src: 'images/home/japandi-02.jpg',
+      alt: 'A warm Japandi living room with textured walls and a pale sofa',
+      credit: 'Pavel Morillo / Pexels',
+      creditUrl: 'https://www.pexels.com/photo/cozy-japandi-living-room-with-modern-design-29383009/',
+    },
+    {
+      src: 'images/home/japandi-03.jpg',
+      alt: 'A minimal interior with wooden beams and low furniture',
+      credit: 'Junseob Yoon / Pexels',
+      creditUrl: 'https://www.pexels.com/photo/a-room-with-minimalist-interior-10421514/',
+    },
+  ];
+  const projectImages = post ? [
+    { src: post.hero, alt: post.heroAlt },
+    ...post.gallery,
+    ...post.article.filter((block) => block.type === 'image'),
+  ].filter((image, index, list) => list.findIndex((candidate) => candidate.src === image.src) === index)
+    .slice(0, 5)
+    .map((image) => ({
+      ...image,
+      credit: `${post.title} / Joshua Ngo`,
+      creditUrl: `${post.slug}.html`,
+    })) : [];
+  const slides = projectImages.length > 1 ? projectImages : starterSlides;
+  return `    <section class="home-slideshow" id="welcome" aria-label="Featured photography slideshow">
+      <div class="home-slides" data-slideshow>
+${slides.map((slide, index) => `        <figure class="home-slide${index === 0 ? ' is-active' : ''}" aria-hidden="${index === 0 ? 'false' : 'true'}">
+          <img src="${escapeHtml(slide.src)}" alt="${escapeHtml(slide.alt)}"${index === 0 ? ' fetchpriority="high"' : ' loading="lazy"'}>
+          <figcaption><a href="${escapeHtml(slide.creditUrl)}"${/^https?:/.test(slide.creditUrl) ? ' target="_blank" rel="noopener noreferrer"' : ''}>${escapeHtml(slide.credit)}</a></figcaption>
+        </figure>`).join('\n')}
+      </div>
+      <button class="home-slide-next" id="homeSlideNext" type="button" aria-label="Show next image"></button>
+      <div class="home-slide-ui" aria-hidden="true">
+        <span>Joshua Ngo / Photography</span>
+        <span class="home-slide-counter"><span id="homeSlideCurrent">01</span> / ${String(slides.length).padStart(2, '0')}</span>
       </div>
     </section>`;
 }

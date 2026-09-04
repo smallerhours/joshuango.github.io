@@ -8,9 +8,10 @@
   <meta property="og:description" content="Photography of fashion, spaces, and quiet observation.">
   <meta property="og:type" content="website">
   <title>Joshua Ngo — Photographer</title>
-  <link rel="stylesheet" href="style.css?v=36">
+  <meta property="og:image" content="https://smallerhours.github.io/joshuango.github.io/images/home/japandi-01.jpg">
+  <link rel="stylesheet" href="style.css?v=37">
 </head>
-<body>
+<body class="home-page">
   <a class="skip-link" href="#content">Skip to content</a>
   <div class="scroll-progress" aria-hidden="true"></div>
 
@@ -38,10 +39,26 @@
 
   <main id="content">
     <!-- HOME_LATEST_START -->
-    <section class="portfolio-empty-home" id="welcome">
-      <p class="portfolio-empty-kicker">Joshua Ngo / Photographer</p>
-      <div class="portfolio-empty-title"><span>Selected</span><h1>Photography</h1><span>Portfolio</span></div>
-      <a class="portfolio-empty-link" href="study.html">View projects <span aria-hidden="true">↘</span></a>
+    <section class="home-slideshow" id="welcome" aria-label="Featured photography slideshow">
+      <div class="home-slides" data-slideshow>
+        <figure class="home-slide is-active" aria-hidden="false">
+          <img src="images/home/japandi-01.jpg" alt="A quiet Japanese room with tatami, timber, and soft natural light" fetchpriority="high">
+          <figcaption><a href="https://www.pexels.com/photo/room-in-a-traditional-japanese-house-20025763/" target="_blank" rel="noopener noreferrer">Bruno Makori / Pexels</a></figcaption>
+        </figure>
+        <figure class="home-slide" aria-hidden="true">
+          <img src="images/home/japandi-02.jpg" alt="A warm Japandi living room with textured walls and a pale sofa" loading="lazy">
+          <figcaption><a href="https://www.pexels.com/photo/cozy-japandi-living-room-with-modern-design-29383009/" target="_blank" rel="noopener noreferrer">Pavel Morillo / Pexels</a></figcaption>
+        </figure>
+        <figure class="home-slide" aria-hidden="true">
+          <img src="images/home/japandi-03.jpg" alt="A minimal interior with wooden beams and low furniture" loading="lazy">
+          <figcaption><a href="https://www.pexels.com/photo/a-room-with-minimalist-interior-10421514/" target="_blank" rel="noopener noreferrer">Junseob Yoon / Pexels</a></figcaption>
+        </figure>
+      </div>
+      <button class="home-slide-next" id="homeSlideNext" type="button" aria-label="Show next image"></button>
+      <div class="home-slide-ui" aria-hidden="true">
+        <span>Joshua Ngo / Photography</span>
+        <span class="home-slide-counter"><span id="homeSlideCurrent">01</span> / 03</span>
+      </div>
     </section>
     <!-- HOME_LATEST_END -->
 
@@ -51,7 +68,7 @@
   </main>
 
   <footer class="site-footer">
-    <p class="footer-brand">Joshua Ngo<sup>©</sup></p>
+    <p class="footer-brand">© 2026 Joshua Ngo</p>
   </footer>
 
   <a class="floating-top" id="floatingTop" href="#welcome" aria-label="Back to top"><span aria-hidden="true">↑</span></a>
@@ -134,6 +151,36 @@
     }, { passive: true });
 
     updateScroll();
+
+    const slides = Array.from(document.querySelectorAll('.home-slide'));
+    const slideCurrent = document.getElementById('homeSlideCurrent');
+    const slideNext = document.getElementById('homeSlideNext');
+    let activeSlide = 0;
+    let slideTimer;
+
+    function showSlide(index) {
+      if (slides.length < 2) return;
+      slides[activeSlide].classList.remove('is-active');
+      slides[activeSlide].setAttribute('aria-hidden', 'true');
+      activeSlide = (index + slides.length) % slides.length;
+      slides[activeSlide].classList.add('is-active');
+      slides[activeSlide].setAttribute('aria-hidden', 'false');
+      slideCurrent.textContent = String(activeSlide + 1).padStart(2, '0');
+    }
+
+    function restartSlideshow() {
+      window.clearInterval(slideTimer);
+      if (!reducedMotion && slides.length > 1 && !document.hidden) {
+        slideTimer = window.setInterval(() => showSlide(activeSlide + 1), 6500);
+      }
+    }
+
+    slideNext?.addEventListener('click', () => {
+      showSlide(activeSlide + 1);
+      restartSlideshow();
+    });
+    document.addEventListener('visibilitychange', restartSlideshow);
+    restartSlideshow();
   </script>
 </body>
 </html>
