@@ -100,7 +100,8 @@ function replaceTokens(template, values) {
 function renderCards(posts) {
   if (!posts.length) {
     return `      <div class="portfolio-empty-state">
-        <p>No projects published yet.</p>
+        <span>Archive / 000</span>
+        <p>The first series will appear here.</p>
       </div>`;
   }
   return posts.map((post, index) => `      <article class="article-card reveal" style="--delay: ${index % 2 ? 80 : 0}ms">
@@ -119,18 +120,20 @@ function renderCards(posts) {
 function renderHomeLatest(post) {
   if (!post) {
     return `    <section class="portfolio-empty-home" id="welcome">
-      <p>Photography portfolio</p>
-      <h1>New work coming soon.</h1>
+      <p class="portfolio-empty-kicker">Joshua Ngo / Photographer</p>
+      <div class="portfolio-empty-title"><span>Selected</span><h1>Photography</h1><span>Portfolio</span></div>
+      <a class="portfolio-empty-link" href="study.html">View projects <span aria-hidden="true">↘</span></a>
     </section>`;
   }
   return `    <section class="portfolio-feature" id="welcome" aria-labelledby="welcome-title">
       <a class="portfolio-feature-link reveal-visual" href="${escapeHtml(post.slug)}.html" aria-label="View ${escapeHtml(post.title)}">
         <img src="${escapeHtml(post.hero)}" alt="${escapeHtml(post.heroAlt)}">
-        <span class="portfolio-feature-shade" aria-hidden="true"></span>
-        <span class="portfolio-feature-label">Selected work / ${escapeHtml(post.number)}</span>
-        <h1 id="welcome-title">${escapeHtml(post.title)}</h1>
-        <span class="portfolio-feature-category">${escapeHtml(post.category)}</span>
       </a>
+      <div class="portfolio-feature-caption">
+        <span>Latest / ${escapeHtml(post.number)}</span>
+        <h1 id="welcome-title"><a href="${escapeHtml(post.slug)}.html">${escapeHtml(post.title)}</a></h1>
+        <span>${escapeHtml(post.category)}</span>
+      </div>
     </section>`;
 }
 
@@ -159,8 +162,8 @@ function renderHomeArchive(posts) {
         </figure>`).join('\n');
   return `    <section class="portfolio-index" id="recent" aria-labelledby="recent-title">
       <header class="portfolio-index-header reveal">
-        <h2 id="recent-title">Selected work</h2>
-        <a href="study.html">View all projects</a>
+        <h2 id="recent-title">Projects</h2>
+        <a href="study.html">Index <span aria-hidden="true">↘</span></a>
       </header>
       <div class="portfolio-grid" aria-label="Photography portfolio">
 ${cards}

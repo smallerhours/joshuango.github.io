@@ -1,6 +1,6 @@
-# Smaller Hours
+# Joshua Ngo — Photography Portfolio
 
-Smaller Hours is an image-first photography portfolio. The existing Markdown publishing system remains the source of truth: each file in `content/posts/` represents one photographic project, and the build step updates the home gallery, Work index, and individual project page together.
+Joshua Ngo is an image-first photography portfolio. The existing Markdown publishing system remains the source of truth: each file in `content/posts/` represents one photographic project, and the build step updates the home gallery, Work index, and individual project page together.
 
 ## Add a photography project
 
