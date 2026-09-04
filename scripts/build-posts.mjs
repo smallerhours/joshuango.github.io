@@ -98,6 +98,11 @@ function replaceTokens(template, values) {
 }
 
 function renderCards(posts) {
+  if (!posts.length) {
+    return `      <div class="portfolio-empty-state">
+        <p>No projects published yet.</p>
+      </div>`;
+  }
   return posts.map((post, index) => `      <article class="article-card reveal" style="--delay: ${index % 2 ? 80 : 0}ms">
         <a class="article-card-link" href="${escapeHtml(post.slug)}.html" aria-label="View ${escapeHtml(post.title)}">
           <div class="article-media">
@@ -112,6 +117,12 @@ function renderCards(posts) {
 }
 
 function renderHomeLatest(post) {
+  if (!post) {
+    return `    <section class="portfolio-empty-home" id="welcome">
+      <p>Photography portfolio</p>
+      <h1>New work coming soon.</h1>
+    </section>`;
+  }
   return `    <section class="portfolio-feature" id="welcome" aria-labelledby="welcome-title">
       <a class="portfolio-feature-link reveal-visual" href="${escapeHtml(post.slug)}.html" aria-label="View ${escapeHtml(post.title)}">
         <img src="${escapeHtml(post.hero)}" alt="${escapeHtml(post.heroAlt)}">
@@ -124,6 +135,7 @@ function renderHomeLatest(post) {
 }
 
 function renderHomeArchive(posts) {
+  if (!posts.length) return '';
   const seen = new Set([posts[0].hero]);
   const images = [];
   posts.forEach((post) => {
@@ -219,7 +231,6 @@ const posts = postFiles.map(parsePost)
   .filter((post) => post.status.toLowerCase() === 'published')
   .sort((a, b) => b.date.localeCompare(a.date));
 
-if (!posts.length) throw new Error('No published posts found.');
 const duplicateSlug = posts.find((post, index) => posts.findIndex((candidate) => candidate.slug === post.slug) !== index);
 if (duplicateSlug) throw new Error(`Duplicate post slug: ${duplicateSlug.slug}`);
 
