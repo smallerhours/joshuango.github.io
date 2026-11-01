@@ -604,3 +604,13 @@ body { font-family: var(--sans); }
   .personal-image, .personal-image:nth-child(n) { width: 100%; margin: 0 0 84px; padding-top: 0; }
   .personal-image-portrait { width: 78%; margin-left: auto; }
 }
+
+/* Keep the homepage identity aligned with the menu's outer gutter. */
+.home-page .site-header .wordmark {
+  left: var(--gutter);
+  transform: none;
+  display: flex;
+  gap: .25em;
+  white-space: nowrap;
+}
+.home-page .home-slide-counter { display: none; }
