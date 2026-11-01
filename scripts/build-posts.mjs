@@ -49,8 +49,8 @@ function parseSections(body) {
 
 function parseBlocks(source = '') {
   return source.split(/\n\s*\n/).map((block) => block.trim()).filter(Boolean).map((block) => {
-    const image = block.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
-    if (image) return { type: 'image', alt: image[1].trim(), src: image[2].trim() };
+    const image = block.match(/^!\[([^\]]*)\]\(([^\s)]+)(?:\s+"([^"]*)")?\)$/);
+    if (image) return { type: 'image', alt: image[1].trim(), src: image[2].trim(), caption: image[3]?.trim() || '' };
     return { type: 'paragraph', text: block.replace(/\s*\n\s*/g, ' ') };
   });
 }
@@ -80,11 +80,15 @@ function parsePost(filename) {
   const quote = parseBlocks(sections.quote).find((block) => block.type === 'paragraph')?.text || '';
   const article = parseBlocks(sections.article);
 
+  if (data.status.toLowerCase() !== 'published') return { ...data, filename };
   validateImage(data.hero, filename);
   gallery.forEach((image) => validateImage(image.src, filename));
   article.filter((block) => block.type === 'image').forEach((image) => validateImage(image.src, filename));
 
-  return { ...data, overview, gallery, quote, article, filename };
+  const type = data.type || 'article';
+  if (!['article', 'page', 'project'].includes(type)) throw new Error(`${filename}: type must be article, page, or project.`);
+  const topics = (data.topics || data.category).split(',').map(value => value.trim()).filter(Boolean);
+  return { ...data, type, topics, overview, gallery, quote, article, filename };
 }
 
 function formatDate(date, style = 'long') {
@@ -101,7 +105,7 @@ function renderCards(posts) {
   if (!posts.length) {
     return `      <div class="portfolio-empty-state">
         <span>Archive / 000</span>
-        <p>The first series will appear here.</p>
+        <p>The first story will appear here.</p>
       </div>`;
   }
   return posts.map((post, index) => `      <article class="article-card reveal" style="--delay: ${index % 2 ? 80 : 0}ms">
@@ -269,18 +273,60 @@ function renderFacts(post) {
           <div><dt>Year</dt><dd>${post.date.slice(0, 4)}</dd></div>`;
 }
 
+const topicSlug = (topic) => Buffer.from(topic.trim().toLowerCase()).toString('hex');
+const topicHref = (topic) => `topic-${topicSlug(topic)}.html`;
+function renderTopicLinks(post) {
+  return post.topics.map(topic => `<a href="${topicHref(topic)}">${escapeHtml(topic)}</a>`).join('');
+}
+function editorialImage(image, credit = '') {
+  return `<figure class="editorial-image"><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy"><figcaption>${escapeHtml(image.caption || credit)}</figcaption></figure>`;
+}
+function renderEditorialGallery(post) {
+  const images = post.gallery.filter(image => image.src !== post.hero);
+  return images.length ? `<section class="editorial-gallery" aria-label="Photo essay">${images.map(image => editorialImage(image, post.photography ? `Photography: ${post.photography}` : '')).join('')}</section>` : '';
+}
+function renderEditorialBody(post) {
+  return `<div class="editorial-body">${post.article.map(block => block.type === 'image'
+    ? editorialImage(block, post.photography ? `Photography: ${post.photography}` : '')
+    : `<div class="editorial-text"><p>${renderInline(block.text)}</p></div>`).join('')}</div>`;
+}
+function renderRelated(post, posts) {
+  const related = posts.filter(item => item.slug !== post.slug && item.type !== 'page' && item.topics.some(topic => post.topics.some(own => own.toLowerCase() === topic.toLowerCase()))).slice(0, 3);
+  return related.length ? `<section class="editorial-related"><h2>Continue exploring</h2><div class="article-grid">${renderCards(related)}</div></section>` : '';
+}
+function buildTopics(posts) {
+  const groups = new Map();
+  for (const post of posts.filter(post => post.type !== 'page')) {
+    for (const topic of post.topics) {
+      const key = topic.toLowerCase();
+      if (!groups.has(key)) groups.set(key, { name: topic, posts: [] });
+      groups.get(key).posts.push(post);
+    }
+  }
+  const template = fs.readFileSync(path.join(templatesDir, 'topic.html'), 'utf8');
+  for (const {name, posts: items} of groups.values()) {
+    fs.writeFileSync(path.join(siteDir, topicHref(name)), replaceTokens(template, { TITLE: escapeHtml(name), TOPIC_LINKS: '', POST_CARDS: renderCards(items) }));
+  }
+  const links = [...groups.values()].map(({name, posts: items}) => `<a href="${topicHref(name)}">${escapeHtml(name)} <span>${items.length}</span></a>`).join('');
+  fs.writeFileSync(path.join(siteDir, 'topics.html'), replaceTokens(template, { TITLE: 'Topics', TOPIC_LINKS: links || '<p>New stories and collections will appear here.</p>', POST_CARDS: '' }));
+}
+
 const postFiles = fs.readdirSync(postsDir)
   .filter((filename) => filename.endsWith('.md') && !filename.startsWith('_'));
 const posts = postFiles.map(parsePost)
   .filter((post) => post.status.toLowerCase() === 'published')
   .sort((a, b) => b.date.localeCompare(a.date));
 
+const reservedSlugs = new Set(['index', 'study', 'personal', 'about', 'topics']);
+for (const post of posts) {
+  if (reservedSlugs.has(post.slug) || post.slug.startsWith('topic-')) throw new Error(`Reserved post slug: ${post.slug}`);
+}
 const duplicateSlug = posts.find((post, index) => posts.findIndex((candidate) => candidate.slug === post.slug) !== index);
 if (duplicateSlug) throw new Error(`Duplicate post slug: ${duplicateSlug.slug}`);
 
 const studyTemplate = fs.readFileSync(path.join(templatesDir, 'study.html'), 'utf8');
-fs.writeFileSync(path.join(siteDir, 'study.html'), replaceTokens(studyTemplate, { POST_CARDS: renderCards(posts) }));
-buildHome(posts);
+fs.writeFileSync(path.join(siteDir, 'study.html'), replaceTokens(studyTemplate, { POST_CARDS: renderCards(posts.filter(post => post.type !== 'page')) }));
+// The homepage is curated separately; publishing must not rewrite it.
 
 const articleTemplate = fs.readFileSync(path.join(templatesDir, 'article.html'), 'utf8');
 for (const post of posts) {
@@ -297,12 +343,20 @@ for (const post of posts) {
     HERO_CAPTION_LEFT: escapeHtml(post.heroCaptionLeft || post.brand || post.category),
     HERO_CAPTION_RIGHT: escapeHtml(post.heroCaptionRight || `Study ${post.number}`),
     FACTS: renderFacts(post),
-    OVERVIEW: post.overview.slice(0, 1).map((block) => `          <p>${renderInline(block.text)}</p>`).join('\n'),
-    GALLERY: renderGallery(post),
-    QUOTE: '',
-    ARTICLE: '',
+    OVERVIEW: post.overview.map((block) => `          <p>${renderInline(block.text)}</p>`).join('\n'),
+    GALLERY: post.type === 'project' ? renderGallery(post) : renderEditorialGallery(post),
+    QUOTE: post.quote ? `<blockquote class="editorial-quote">${renderInline(post.quote)}</blockquote>` : '',
+    ARTICLE: renderEditorialBody(post),
+    AUTHOR: escapeHtml(post.author || 'Joshua Ngo'),
+    DATE_LONG: formatDate(post.date),
+    TYPE: escapeHtml(post.type || 'article'),
+    TOPICS: renderTopicLinks(post),
+    RELATED: renderRelated(post, posts),
   };
   fs.writeFileSync(path.join(siteDir, `${post.slug}.html`), replaceTokens(articleTemplate, values));
 }
 
-console.log(`Built ${posts.length} published project${posts.length === 1 ? '' : 's'} and refreshed the homepage and Work index.`);
+buildTopics(posts);
+
+console.log(`Built ${posts.length} published project${posts.length === 1 ? '' : 's'} and refreshed the Work and topic indexes; homepage unchanged.`);
+
