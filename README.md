@@ -1,25 +1,23 @@
-# Joshua Ngo — Photography Portfolio
+# Joshua Ngo — Publishing
 
-Joshua Ngo is an image-first photography portfolio. The existing Markdown publishing system remains the source of truth: each file in `content/posts/` represents one photographic project, and the build step updates the home gallery, Work index, and individual project page together.
+The homepage remains separately curated. Building articles does not change `index.html`.
 
-## Add a photography project
+## Create an article
 
-1. Duplicate a Markdown file in `content/posts/`.
-2. Replace the title, slug, project number, category, credits, hero image, and image descriptions.
-3. Put additional photographs under `## Gallery` using normal Markdown image syntax.
-4. Keep `## Overview` to one short paragraph; it is the only project description shown.
-5. Run `npm run build:posts`.
+Copy `content/posts/_template.md` to a new Markdown file in the same folder. Set a unique slug, title, date, category, excerpt, hero image, and image description. Set `topics` to comma-separated collection names, for example `Architecture, Seoul`. Set `type` to `article`, `page`, or `project`.
 
-The first published project by date becomes the full-screen home image. Its additional photographs and the remaining projects populate the home gallery automatically. Original longer notes can stay in Markdown without appearing on the image-led project page.
+- `article`: a story with an introduction, full text, photographs, and optional quote.
+- `page`: the same flexible layout, available at its own URL but excluded from story collections and related stories.
+- `project`: retains the alternating project photograph sequence, with full text also available.
 
-### Adding images
-
-Use this format on its own line:
+Write introductory paragraphs under `## Overview`. Write the full story under `## Article`, placing images between paragraphs wherever they belong. Add an optional pull quote under `## Quote`. `## Gallery` adds a photo essay after the story. Use blank lines between paragraphs and images. Plain paragraphs and external Markdown links are supported; section headings are reserved for these named sections.
 
 ```markdown
-![A useful description of the image](images/your-image.jpg)
+![Describe the photograph](images/your-photo.jpg "Optional visible caption")
 ```
 
-Images under Gallery form the alternating visual sequence. Images under Article are also included, allowing older Markdown files to keep working. Portrait and landscape photographs preserve their natural proportions.
+Captions are optional. Without one, gallery and story photographs use the photography credit. Image descriptions remain accessibility text, separate from captions. Set `author` for the byline and `photography` for image credits.
 
-While editing, run `npm run dev:posts` once. Every save refreshes the homepage, Work index, and project pages. When a project Markdown file is committed to `main`, the GitHub workflow rebuilds and publishes the portfolio automatically.
+Keep `status: draft` while working. Change to `published` and run `npm run build:posts` to generate the article, Work index, `topics.html`, and a collection page for each topic. The existing GitHub workflow builds committed content. Use `npm run dev:posts` to rebuild on saves locally.
+
+Topic names link to their generated collections below each article's byline. Related stories share a topic. Standalone pages need to be linked from another page or shared by URL. Slugs `index`, `study`, `personal`, `about`, `topics`, and those beginning with `topic-` are reserved.

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{TITLE}} — stories and photography by Joshua Ngo.">
+  <meta property="og:title" content="{{TITLE}} — Joshua Ngo">
+  <meta property="og:description" content="Stories and photography by Joshua Ngo.">
+  <meta property="og:type" content="website">
+  <title>{{TITLE}} — Joshua Ngo</title>
+  <link rel="stylesheet" href="style.css?v=38">
+  <link rel="stylesheet" href="editorial.css?v=2">
+</head>
+<body class="editorial-page topic-page">
+  <a class="skip-link" href="#content">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <a class="wordmark" href="index.html" aria-label="Joshua Ngo, home"><span>Joshua</span><span>Ngo</span></a>
+    <p class="header-note" aria-label="Visitor local time"><span id="localTime"></span></p>
+    <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="sideMenu" aria-label="Open menu"><span></span><span></span></button>
+  </header>
+
+  <div class="menu-backdrop" id="menuBackdrop" aria-hidden="true"></div>
+  <aside class="side-menu" id="sideMenu" aria-hidden="true" aria-label="Site menu">
+    <header class="menu-header"><button class="menu-close" id="menuClose" type="button" aria-label="Close menu">Close</button></header>
+    <nav class="menu-nav" aria-label="Menu navigation">
+      <div class="menu-group">
+        <p class="menu-group-title"><span>01</span>Portfolio</p>
+        <div class="menu-subnav"><a href="personal.html">Personal</a><a href="study.html" aria-current="page">Work</a></div>
+      </div>
+      <a class="menu-primary" href="about.html"><span>02</span>About</a>
+    </nav>
+    <footer class="menu-footer"><img class="instagram-mark" src="images/instagram.svg" alt="Instagram"></footer>
+  </aside>
+
+  <main class="study-archive" id="content">
+    <header class="archive-header">
+      <p><a href="study.html">Work</a> / <a href="topics.html">Topics</a></p>
+      <h1>{{TITLE}}</h1>
+      <nav class="topic-directory" aria-label="Browse topics">{{TOPIC_LINKS}}</nav>
+    </header>
+
+    <section class="article-grid" aria-label="Stories in this collection">
+{{POST_CARDS}}
+    </section>
+  </main>
+
+  <footer class="site-footer"><p class="footer-brand">© 2026 Joshua Ngo</p></footer>
+  <a class="floating-top" id="floatingTop" href="#content" aria-label="Back to top"><span aria-hidden="true">↑</span></a>
+
+  <script>
+    const root = document.documentElement;
+    const header = document.getElementById('siteHeader');
+    const menuButton = document.getElementById('menuButton');
+    const menuClose = document.getElementById('menuClose');
+    const menuBackdrop = document.getElementById('menuBackdrop');
+    const sideMenu = document.getElementById('sideMenu');
+    const floatingTop = document.getElementById('floatingTop');
+    const localTime = document.getElementById('localTime');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let ticking = false;
+
+    function setMenu(open) {
+      document.body.classList.toggle('menu-open', open);
+      menuButton.setAttribute('aria-expanded', String(open));
+      menuButton.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      sideMenu.setAttribute('aria-hidden', String(!open));
+      menuBackdrop.setAttribute('aria-hidden', String(!open));
+      if (open) menuClose.focus();
+      else if (document.activeElement === menuClose) menuButton.focus();
+    }
+
+    function updateLocalDateTime() {
+      localTime.textContent = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(new Date());
+    }
+
+    menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
+    menuClose.addEventListener('click', () => setMenu(false));
+    menuBackdrop.addEventListener('click', () => setMenu(false));
+    sideMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setMenu(false); });
+    updateLocalDateTime();
+    window.setInterval(updateLocalDateTime, 1000);
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal').forEach((item) => revealObserver.observe(item));
+
+    function updateScroll() {
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      root.style.setProperty('--progress', max > 0 ? y / max : 0);
+      header.classList.toggle('is-compact', y > 40);
+      floatingTop.classList.toggle('is-visible', y > window.innerHeight * 0.55);
+      if (!reducedMotion) {
+        document.querySelectorAll('[data-depth]').forEach((item) => {
+          const rect = item.parentElement.getBoundingClientRect();
+          const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * Number(item.dataset.depth);
+          item.style.setProperty('--depth', offset + 'px');
+        });
+      }
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(updateScroll); ticking = true; }
+    }, { passive: true });
+    updateScroll();
+  </script>
+</body>
+</html>
+

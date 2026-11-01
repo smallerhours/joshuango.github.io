@@ -1,35 +1,37 @@
 ---
-title: Your project title
-slug: your-project-url
-number: 02
-date: 2026-09-01
-category: Objects
-brand: Optional brand or subject
-brandUrl: https://example.com/
-photography: Photographer name or image source
-photographyUrl: https://example.com/
-excerpt: A short description used by search engines and social sharing.
-hero: images/your-hero-image.jpg
-heroAlt: Describe the hero image for visitors using a screen reader
-heroCaptionLeft: Subject / Collection
-heroCaptionRight: Project 02
+title: Your story title
+slug: your-story-url
+type: article
+number: 01
+date: 2026-11-01
+category: Architecture
+topics: Architecture, Places
+author: Joshua Ngo
+photography: Joshua Ngo
+excerpt: A short introduction to the story, also used for search descriptions.
+hero: images/your-hero.jpg
+heroAlt: Describe the hero photograph
+heroCaptionLeft: Location or subject
+heroCaptionRight: Photography by Joshua Ngo
 status: draft
 ---
 
 ## Overview
 
-Write one concise project note here. Only the first paragraph is shown on the project page.
-
-## Gallery
-
-![Describe the first image](images/your-first-image.jpg)
-
-![Describe the second image](images/your-second-image.jpg)
+Introduce the subject in one or two paragraphs.
 
 ## Article
 
-Optional private notes can live here without appearing on the portfolio page. Images placed here are included in the project sequence.
+Write the full story here. Place photographs between paragraphs to shape the reading rhythm.
 
-![Describe this project image](images/your-project-image.jpg)
+![Describe the photograph](images/your-photo.jpg "A visible image caption or credit")
 
-Change status to published when the project is ready.
+Continue the story here.
+
+## Quote
+
+An optional pull quote from the story.
+
+## Gallery
+
+![Describe another photograph](images/another-photo.jpg "An optional visible caption")

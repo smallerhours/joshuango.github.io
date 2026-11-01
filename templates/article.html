@@ -6,12 +6,13 @@
   <meta name="description" content="{{EXCERPT}}">
   <meta property="og:title" content="{{TITLE}} — Joshua Ngo">
   <meta property="og:description" content="{{EXCERPT}}">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://joshuango.github.io/{{HERO}}">
+  <meta property="og:type" content="article">
+  
   <title>{{TITLE}} — Joshua Ngo</title>
   <link rel="stylesheet" href="style.css?v=38">
+  <link rel="stylesheet" href="editorial.css?v=2">
 </head>
-<body class="article-page">
+<body class="article-page editorial-page editorial-{{TYPE}}">
   <a class="skip-link" href="#content">Skip to content</a>
   <div class="scroll-progress" aria-hidden="true"></div>
 
@@ -39,10 +40,13 @@
       <header class="article-masthead">
         <div class="article-topline">
           <span>{{NUMBER}}</span>
-          <span>Project / {{CATEGORY}}</span>
-          <span>Joshua Ngo</span>
+          <a href="topics.html">{{CATEGORY}}</a>
+          <span>{{TYPE}}</span>
         </div>
         <h1>{{TITLE}}</h1>
+        <p class="editorial-deck">{{EXCERPT}}</p>
+        <p class="editorial-byline">Words by {{AUTHOR}} <span> / </span><time datetime="{{DATE_ISO}}">{{DATE_LONG}}</time></p>
+        <nav class="editorial-topics" aria-label="Story topics">{{TOPICS}}</nav>
       </header>
 
       <figure class="article-lead article-reveal">
@@ -59,11 +63,13 @@
         </div>
       </section>
 
-{{GALLERY}}
+{{ARTICLE}}
 
 {{QUOTE}}
 
-{{ARTICLE}}
+{{GALLERY}}
+
+{{RELATED}}
 
       <nav class="article-project-nav" aria-label="Project navigation">
         <a href="study.html"><strong>All Work</strong></a>
@@ -132,3 +138,4 @@
   </script>
 </body>
 </html>
+
